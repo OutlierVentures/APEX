@@ -41,10 +41,9 @@ contract("Sample", accounts => {
 
   let task;
   it('should execute compute task', async () => {
-    let taskFn = 'addition(uint256,uint256)';
+    let taskFn = 'total(uint256)';
     let taskArgs = [
-      [76, 'uint256'],
-      [17, 'uint256'],
+      [76, 'uint256']
     ];
     let taskGasLimit = 100000;
     let taskGasPx = utils.toGrains(1);
@@ -79,7 +78,7 @@ contract("Sample", accounts => {
     });
     expect(task.engStatus).to.equal('SUCCESS');
     task = await enigma.decryptTaskResult(task);
-    expect(parseInt(task.decryptedOutput, 16)).to.equal(76+17);
+    expect(parseInt(task.decryptedOutput, 16)).to.equal(76);
   });
 
 })
