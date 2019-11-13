@@ -22,7 +22,7 @@ function sleep(ms) {
 let enigma = null;
 let contractAddr;
 
-contract("MillionairesProblem", accounts => {
+contract("Location", accounts => {
   before(function() {
     enigma = new Enigma(
       web3,
@@ -37,17 +37,17 @@ contract("MillionairesProblem", accounts => {
     );
     enigma.admin();
     enigma.setTaskKeyPair('cupcake');
-    contractAddr = fs.readFileSync('test/millionaires_problem.txt', 'utf-8');
+    contractAddr = fs.readFileSync('test/location.txt', 'utf-8');
   });
 
   let task;
 
-  // ADDING FIRST MILLIONAIRE
-  it('should execute compute task to add the first millionaire', async () => {
-    let taskFn = 'add_millionaire(address,uint256)';
+  // Add first location
+  it('should add the first location', async () => {
+    let taskFn = 'add_location(int32,int32)';
     let taskArgs = [
-      [accounts[1], 'address'],
-      [1000000, 'uint256'],
+      [40000000],
+      [-8000000],
     ];
     let taskGasLimit = 500000;
     let taskGasPx = utils.toGrains(1);
@@ -73,12 +73,12 @@ contract("MillionairesProblem", accounts => {
     process.stdout.write('Completed. Final Task Status is '+task.ethStatus+'\n');
   }, 10000);
 
-  // ADDING SECOND MILLIONAIRE
-  it('should execute compute task to add the second millionaire', async () => {
-      let taskFn = 'add_millionaire(address,uint256)';
+  // Add second location
+  it('should add the second location', async () => {
+      let taskFn = 'add_location(in32,int32)';
       let taskArgs = [
-          [accounts[2], 'address'],
-          [2000000, 'uint256'],
+          [30000000, 'int32'],
+          [50000000, 'int32'],
       ];
       let taskGasLimit = 500000;
       let taskGasPx = utils.toGrains(1);
@@ -104,9 +104,9 @@ contract("MillionairesProblem", accounts => {
       process.stdout.write('Completed. Final Task Status is '+task.ethStatus+'\n');
   }, 10000);
 
-  // COMPUTING RICHEST MILLIONAIRE
-  it('should execute compute task to compute richest millionaire', async () => {
-      let taskFn = 'compute_richest()';
+  // Compute northernmost location
+  it('should compute the northernmost location', async () => {
+      let taskFn = 'compute_northernmost()';
       let taskArgs = [];
       let taskGasLimit = 500000;
       let taskGasPx = utils.toGrains(1);
@@ -141,8 +141,8 @@ contract("MillionairesProblem", accounts => {
     expect(task.engStatus).to.equal('SUCCESS');
     task = await enigma.decryptTaskResult(task);
     expect(web3.eth.abi.decodeParameters([{
-        type: 'address',
-        name: 'richestMillionaire',
-    }], task.decryptedOutput).richestMillionaire).to.equal(accounts[2]);
+        type: 'int32',
+        name: 'northernmost',
+    }], task.decryptedOutput).northernmost).to.equal(40000000);
   });
 });
