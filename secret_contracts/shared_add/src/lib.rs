@@ -33,7 +33,7 @@ pub struct Contract;
 impl ContractInterface for Contract {
     fn total(single_enterprise_value: U256) -> U256 {
         let on_chain: Option<U256> = read_state!(TOTAL);
-        if on_chain.is_none() {
+        if on_chain.is_none() { 
             write_state!("total"=> single_enterprise_value.as_u32());
             single_enterprise_value
         }
