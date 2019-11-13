@@ -15,9 +15,10 @@ static LOCATIONS: &str = "locations";
 
 // Structs
 #[derive(Serialize, Deserialize)]
-pub struct Millionaire {
-    address: H160,
-    net_worth: U256,
+pub struct Location {
+    // Multiply by 1M - contracts only support integers
+    latitude: i32,
+    longitude: i32,
 }
 
 // Public struct Contract which will consist of private and public-facing secret contract functions
@@ -25,7 +26,7 @@ pub struct Contract;
 
 // Private functions accessible only by the secret contract
 impl Contract {
-    fn get_locations() -> Vec<Millionaire> {
+    fn get_locations() -> Vec<Location> {
         read_state!(LOCATIONS).unwrap_or_default()
     }
 }
@@ -33,30 +34,30 @@ impl Contract {
 // Public trait defining public-facing secret contract functions
 #[pub_interface]
 pub trait ContractInterface{
-    fn add_location(address: H160, net_worth: U256);
-    fn compute_richest() -> H160;
+    fn add_location(latitude: i32, longitude: i32);
+    fn compute_northernmost() -> i32;
 }
 
 // Implementation of the public-facing secret contract functions defined in the ContractInterface
 // trait implementation for the Contract struct above
 impl ContractInterface for Contract {
     #[no_mangle]
-    fn add_location(address: H160, net_worth: U256) {
+    fn add_location(latitude: i32, longitude: i32) {
         let mut locations = Self::get_locations();
-        locations.push(Millionaire {
-            address,
-            net_worth,
+        locations.push(Location {
+            latitude,
+            longitude,
         });
         write_state!(LOCATIONS => locations);
     }
 
     #[no_mangle]
-    fn compute_richest() -> H160 {
-        match Self::get_locations().iter().max_by_key(|m| m.net_worth) {
+    fn compute_northernmost() -> i32 {
+        match Self::get_locations().iter().max_by_key(|m| m.latitude) {
             Some(location) => {
-                location.address
+                location.latitude
             },
-            None => H160::zero(),
+            None => i32::zero(),
         }
     }
 }
