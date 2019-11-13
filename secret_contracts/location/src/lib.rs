@@ -11,7 +11,7 @@ use eng_wasm_derive::pub_interface;
 use serde::{Serialize, Deserialize};
 
 // Encrypted state keys
-static MILLIONAIRES: &str = "millionaires";
+static LOCATIONS: &str = "locations";
 
 // Structs
 #[derive(Serialize, Deserialize)]
@@ -25,15 +25,15 @@ pub struct Contract;
 
 // Private functions accessible only by the secret contract
 impl Contract {
-    fn get_millionaires() -> Vec<Millionaire> {
-        read_state!(MILLIONAIRES).unwrap_or_default()
+    fn get_locations() -> Vec<Millionaire> {
+        read_state!(LOCATIONS).unwrap_or_default()
     }
 }
 
 // Public trait defining public-facing secret contract functions
 #[pub_interface]
 pub trait ContractInterface{
-    fn add_millionaire(address: H160, net_worth: U256);
+    fn add_location(address: H160, net_worth: U256);
     fn compute_richest() -> H160;
 }
 
@@ -41,20 +41,20 @@ pub trait ContractInterface{
 // trait implementation for the Contract struct above
 impl ContractInterface for Contract {
     #[no_mangle]
-    fn add_millionaire(address: H160, net_worth: U256) {
-        let mut millionaires = Self::get_millionaires();
-        millionaires.push(Millionaire {
+    fn add_location(address: H160, net_worth: U256) {
+        let mut locations = Self::get_locations();
+        locations.push(Millionaire {
             address,
             net_worth,
         });
-        write_state!(MILLIONAIRES => millionaires);
+        write_state!(LOCATIONS => locations);
     }
 
     #[no_mangle]
     fn compute_richest() -> H160 {
-        match Self::get_millionaires().iter().max_by_key(|m| m.net_worth) {
-            Some(millionaire) => {
-                millionaire.address
+        match Self::get_locations().iter().max_by_key(|m| m.net_worth) {
+            Some(location) => {
+                location.address
             },
             None => H160::zero(),
         }
