@@ -94,7 +94,7 @@ module.exports = async function(deployer, network, accounts) {
   });
 
   const config = {
-    filename: 'simple_addition.wasm',
+    filename: 'shared_add.wasm',
     fn: 'construct()',
     args: '',
     gasLimit: 100000,
@@ -103,4 +103,6 @@ module.exports = async function(deployer, network, accounts) {
   };
   const address = await deploySecretContract(config);
   console.log(`Secret Contract "${config.filename}" deployed at Enigma address: ${address}`);
+
+
 };
