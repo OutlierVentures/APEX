@@ -93,7 +93,7 @@ module.exports = async function(deployer, network, accounts) {
     return;
   });
 
-  const config = {
+  const configSharedAdd = {
     filename: 'shared_add.wasm',
     fn: 'construct()',
     args: '',
@@ -101,8 +101,18 @@ module.exports = async function(deployer, network, accounts) {
     gasPrice: utils.toGrains(1),
     from: accounts[0]
   };
-  const address = await deploySecretContract(config);
-  console.log(`Secret Contract "${config.filename}" deployed at Enigma address: ${address}`);
+  const addressSharedAdd = await deploySecretContract(configSharedAdd);
+  console.log(`Secret Contract "${configSharedAdd.filename}" deployed at Enigma address: ${addressSharedAdd}`);
 
+  const configLocation = {
+    filename: 'location.wasm',
+    fn: 'construct()',
+    args: [],
+    gasLimit: 1000000,
+    gasPrice: utils.toGrains(1),
+    from: accounts[0]
+  };
+  const addressLocation = await deploySecretContract(configLocation);
+  console.log(`Secret Contract "${configLocation.filename}" deployed at Enigma address: ${addressLocation}`);
 
 };
