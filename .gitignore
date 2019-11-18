@@ -4,4 +4,5 @@ node_modules
 build/enigma_contacts/*
 build/smart_contacts/*
 build/secret_contracts/*
+secret_contracts/**/target
 .DS_store
