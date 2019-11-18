@@ -1,7 +1,7 @@
 pragma solidity ^0.5.0;
 pragma experimental ABIEncoderV2;
 
-contract LocationsContract {
+contract LocationContract {
     address private owner;
     address private scAuthorized;
 
