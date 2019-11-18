@@ -28,3 +28,6 @@ echo -e "${onyellow}Installing Enigma...$endcolor"
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo npm install -g @enigmampc/discovery-cli --unsafe-perm=true
+npm install
+cd client
+npm install
