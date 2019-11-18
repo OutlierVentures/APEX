@@ -1,4 +1,6 @@
 node_modules
+**/*.rs.bk
+**/Cargo.lock
 build/enigma_contacts/*
 build/smart_contacts/*
 build/secret_contracts/*
