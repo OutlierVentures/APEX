@@ -17,8 +17,22 @@ Shared industry analytics for supply chain enterprises. Enigma private compute a
 ```sh
 discovery start
 discovery compile
+disvovery migrate
 discovery test
 ```
+
+## Start the DApp
+
+```sh
+cd client
+npm start
+```
+
+This uses the HTTP Web3 provider to connect to a local Ganache network configured in truffle.js. To use MetaMask, set the Web3 provider to do so and **change the address field from a dropdown to a text field.**
+
+Test: `npm test`
+Build: `npm run build`
+For more details, see the [Enigma React template](https://github.com/enigmampc/discovery-template-dapp).
 
 ## Contracts
 
