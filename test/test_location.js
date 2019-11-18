@@ -115,7 +115,7 @@ contract("LocationContract", accounts => {
             name: 'northernmostLocation',
         }], task.decryptedOutput).northernmostLocation;
 
-        expect(northernmostLocation).to.equal(location2);
+        expect(northernmostLocation).to.equal(location2.toString());
     });
 
 });
