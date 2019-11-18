@@ -1,5 +1,5 @@
 node_modules
 build/enigma_contacts/*
 build/smart_contacts/*
-!build/enigma_contacts/.gitkeep
-!build/smart_contacts/.gitkeep
+build/secret_contracts/*
+.DS_store
