@@ -93,7 +93,7 @@ module.exports = async function(deployer, network, accounts) {
     });
 
     let config = {
-        filename: 'location_contract.wasm',
+        filename: 'location.wasm',
         fn: 'construct()',
         args: '',
         gasLimit: 500000,
