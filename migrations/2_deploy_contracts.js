@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Web3 = require('web3');
 const dotenv = require('dotenv');
-const MillionairesProblem = artifacts.require('MillionairesProblem.sol');
+const LocationContract = artifacts.require('LocationContract.sol');
 const { Enigma, utils, eeConstants } = require('enigma-js/node');
 
 dotenv.config({ path: path.resolve(process.cwd(), '..', '.env') });
@@ -87,13 +87,13 @@ module.exports = async function(deployer, network, accounts) {
 
     // Deploy your Smart and Secret contracts below this point:
 
-    deployer.deploy(MillionairesProblem).then(function() {
-        console.log(`Smart Contract "MillionairesProblem.Sol" has been deployed at ETH address: ${MillionairesProblem.address}`);
+    deployer.deploy(LocationContract).then(function() {
+        console.log(`Smart Contract "LocationContract.Sol" has been deployed at ETH address: ${LocationContract.address}`);
         return;
     });
 
     let config = {
-        filename: 'millionaires_problem.wasm',
+        filename: 'location_contract.wasm',
         fn: 'construct()',
         args: '',
         gasLimit: 500000,
