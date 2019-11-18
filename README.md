@@ -24,7 +24,7 @@ discovery test
 ## Start the DApp
 
 ```sh
-cd client
+cd app
 npm start
 ```
 
@@ -34,10 +34,6 @@ Test: `npm test`
 Build: `npm run build`
 For more details, see the [Enigma React template](https://github.com/enigmampc/discovery-template-dapp).
 
-## Contracts
-
-- `location`: an on-chain state storing latitudes and logitudes from all ionmdustry players that can be computed on e.g. to find the northernmost potential customer, or to cluster customers with machine learning to determine where to place stores or cell towers.
-- `shared_add`: a simple demo of an on-chain contract state that can be incremented by anyone without revealing the individual values any participant has contributed.
 
 ## Debugging
 
