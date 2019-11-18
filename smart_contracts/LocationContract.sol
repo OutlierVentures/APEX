@@ -1,11 +1,9 @@
 pragma solidity ^0.5.0;
 pragma experimental ABIEncoderV2;
 
-contract MillionairesProblem {
+contract LocationsContract {
     address private owner;
     address private scAuthorized;
-
-    address[] private registeredMillionaires;
 
     constructor
             (
