@@ -5,43 +5,46 @@ use eng_wasm_derive::pub_interface;
 use serde::{Serialize, Deserialize};
 
 // Encrypted state keys
-static MILLIONAIRES: &str = "millionaires";
+static LOCATIONS: &str = "locations";
 
+// Structs
 #[derive(Serialize, Deserialize)]
-pub struct Millionaire {
-	address: H160,
-	net_worth: U256,
+pub struct Location {
+    // Multiply by 1M - contracts only support integers
+    latitude: i32,
+    longitude: i32,
 }
 
-struct MillionairesContract;
+
+struct LocationContract;
 
 #[pub_interface]
 
-impl MillionairesContract {
+impl LocationContract {
 	// private
-	fn get_millionaires() -> Vec<Millionaire> {
-		read_state!(MILLIONAIRES).unwrap_or_default()
-	}
+	fn get_locations() -> Vec<Location> {
+        read_state!(LOCATIONS).unwrap_or_default()
+    }
 
 	// public
-	pub fn add_millionaire(address: H160, net_worth: U256) {
-		let mut millionaires = Self::get_millionaires();
-		millionaires.push(
-			Millionaire {
-				address,
-				net_worth,
+	pub fn add_location(latitude: i32, longitude: i32) {
+		let mut locations = Self::get_millionaires();
+		locations.push(
+			Location {
+				latitude,
+				longitude,
 			}
 		);
 
-		write_state!(MILLIONAIRES => millionaires);
+		write_state!(LOCATIONS => locations);
 	}
 
-	pub fn compute_richest() -> H160 {
-		match Self::get_millionaires().iter().max_by_key(|m| m.net_worth) {
-			Some(millionaire) => {
-				millionaire.address
+	pub fn compute_northernmost() -> i32 {
+		match Self::get_locations().iter().max_by_key(|m| m.latitude) {
+			Some(locations) => {
+				location.latitude
 			},
-			None => H160::zero(),
+			None => i32::zero(),
 		}
 	}
 }
