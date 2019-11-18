@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const dotenv = require('dotenv');
-const MillionairesProblemContract = artifacts.require("MillionairesProblem");
+const LocationContractContract = artifacts.require("LocationContract");
 const { Enigma, utils, eeConstants } = require('enigma-js/node');
 
 var EnigmaContract;
@@ -22,9 +22,9 @@ function sleep(ms) {
 
 let enigma = null;
 
-contract("MillionairesProblem", accounts => {
-    let millionaire1 = accounts[0];
-    let millionaire2 = accounts[1];
+contract("LocationContract", accounts => {
+    let location1 = 10000000;
+    let location2 = 20000000;
     let task;
 
     before(function() {
@@ -41,7 +41,7 @@ contract("MillionairesProblem", accounts => {
         enigma.admin();
         enigma.setTaskKeyPair('cupcake');
 
-        contractAddr = fs.readFileSync('test/millionaires_problem.txt', 'utf-8');
+        contractAddr = fs.readFileSync('test/location.txt', 'utf-8');
     })
 
     // Helper function to wait for final task completion
@@ -54,11 +54,11 @@ contract("MillionairesProblem", accounts => {
         return task.ethStatus;
     }
 
-    it('should add millionaire #1', async() => {
-        let taskFn = 'add_millionaire(address,uint256)';
+    it('should add location #1', async() => {
+        let taskFn = 'add_location(int32,int32)';
         let taskArgs = [
-            [millionaire1, 'address'],
-            [17000000, 'uint256'],
+            [location1, 'int32'],
+            [0, 'int32'],
         ];
         let taskGasLimit = 500000;
         let taskGasPx = utils.toGrains(1);
@@ -70,11 +70,11 @@ contract("MillionairesProblem", accounts => {
         expect(await finalTaskStatus()).to.equal(eeConstants.ETH_STATUS_VERIFIED);
     });
 
-    it('should add millionaire #2', async() => {
-        let taskFn = 'add_millionaire(address,uint256)';
+    it('should add location #2', async() => {
+        let taskFn = 'add_location(int32,int32)';
         let taskArgs = [
-            [millionaire2, 'address'],
-            [289487121, 'uint256'],
+            [location2, 'int32'],
+            [30000000, 'int32'],
         ];
         let taskGasLimit = 500000;
         let taskGasPx = utils.toGrains(1);
@@ -86,8 +86,8 @@ contract("MillionairesProblem", accounts => {
         expect(await finalTaskStatus()).to.equal(eeConstants.ETH_STATUS_VERIFIED);
     });
 
-    it('should execute task to compute richest millionaire', async() => {
-        let taskFn = 'compute_richest()';
+    it('should execute task to compute northernmost location', async() => {
+        let taskFn = 'compute_northernmost()';
         let taskArgs = [];
         let taskGasLimit = 500000;
         let taskGasPx = utils.toGrains(1);
@@ -99,7 +99,7 @@ contract("MillionairesProblem", accounts => {
         expect(await finalTaskStatus()).to.equal(eeConstants.ETH_STATUS_VERIFIED);
     });
 
-    it('should get the result and verify the computation of richest millionaire is correct', async() => {
+    it('should get the result and verify the computation of northernmost location is correct', async() => {
         // Get Enigma task result
         task = await new Promise((resolve, reject) => {
             enigma.getTaskResult(task)
@@ -110,12 +110,12 @@ contract("MillionairesProblem", accounts => {
 
         // Decrypt Enigma task result
         task = await enigma.decryptTaskResult(task);
-        let richestMillionaire = web3.eth.abi.decodeParameters([{
-            type: 'address',
-            name: 'richestMillionaire',
-        }], task.decryptedOutput).richestMillionaire;
+        let northernmostLocation = web3.eth.abi.decodeParameters([{
+            type: 'int32',
+            name: 'northernmostLocation',
+        }], task.decryptedOutput).northernmostLocation;
 
-        expect(richestMillionaire).to.equal(millionaire2);
+        expect(northernmostLocation).to.equal(location2);
     });
 
 });
