@@ -45,4 +45,4 @@ sudo usermod -aG docker $USER
 
 If you're getting a file/directory does not exist error on `discovery compile`, it's likely you've run `discovery start` in a different directory. Just run `discovery start` in this directory.
 
-If you're getting an `unable to resolve EnigmaSimulation.json` error, copy the contents of your `build` folder to the `app/src/build` folder.
+If you're getting an `unable to resolve EnigmaSimulation.json` error, the symlink at `app/src/build` is not working. Create a new symlink there to the top-level `build` directory, or alternatively make an `app/src/build` folder and copy the contents of the top-level `build` folder to it.
