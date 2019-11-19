@@ -25,11 +25,12 @@ class Header extends Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
+                        <img src="https://outlierventures.io/wp-content/themes/ov/assets/images/outlierventureslogo.svg" />
                         <Typography
                             variant="subtitle1"
                             color="inherit"
                         >
-                            Compute Northernmost Telco User
+                            Telco Industry-wide Analytics
                         </Typography>
                     </Toolbar>
                 </AppBar>
