@@ -36,7 +36,7 @@ class LocationContract extends Component {
                 label={label}
                 type="number"
                 placeholder={label}
-                error={touched && invalid}
+                 error={touched && invalid}
                 helperText={touched && error}
                 {...input}
                 {...custom}
@@ -57,9 +57,10 @@ class LocationContract extends Component {
         //      scAddr - the secret contract address for which this computation task belongs to
         // )
         const taskFn = 'add_location(int32,int32)';
+        // Multiply by 1M as contracts only take ints
         const taskArgs = [
-            [latitude, 'int32'],
-            [longitude, 'int32'],
+            [latitude * 1000000, 'int32'],
+            [longitude * 1000000, 'int32'],
         ];
         const taskGasLimit = 10000000;
         const taskGasPx = utils.toGrains(1e-7);
@@ -189,7 +190,7 @@ class LocationContract extends Component {
                             <p>
                                 {
                                     this.props.northernmostLocation !== null ?
-                                        this.props.northernmostLocation
+                                        this.props.northernmostLocation / 1000000 // Divide result by 1M again to get latitude
                                         :
                                         "Not yet computed"
                                 }
