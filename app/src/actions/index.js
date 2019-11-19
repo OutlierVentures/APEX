@@ -20,7 +20,7 @@ export const initializeAccounts = (accounts) => {
 // Redux action for when the contract has been deployed to a particular address
 export const deployLocationContract = (deployedLocationContract) => {
     return {
-        type: 'LOCATIONS_CONTRACT_DEPLOYED',
+        type: 'LOCATION_CONTRACT_DEPLOYED',
         payload: deployedLocationContract
     };
 };
