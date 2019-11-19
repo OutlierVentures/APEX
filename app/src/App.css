@@ -30,11 +30,3 @@
     transform: rotate(360deg);
   }
 }
-
-.MuiAppBar-colorPrimary {
-  background-color: #222222;
-}
-
-.ovlogo {
-  height: 1em;
-}
