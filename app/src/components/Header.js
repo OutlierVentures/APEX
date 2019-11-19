@@ -23,9 +23,9 @@ class Header extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
-                <AppBar position="static">
+                <AppBar position="static" style={{backgroundColor: "#222222"}}>
                     <Toolbar>
-                        <img id="ovlogo" src="https://outlierventures.io/wp-content/themes/ov/assets/images/outlierventureslogo.svg" />
+                        <img style={{height: "1em"}} src="https://outlierventures.io/wp-content/themes/ov/assets/images/outlierventureslogo.svg" />
                         <Typography
                             variant="subtitle1"
                             color="inherit"
