@@ -32,5 +32,9 @@
 }
 
 .MuiAppBar-colorPrimary {
-  color: #222222;
+  background-color: #222222;
+}
+
+.ovlogo {
+  height: 1em;
 }
