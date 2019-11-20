@@ -161,7 +161,7 @@ class LocationContract extends Component {
                                     <Field
                                         name="latitude"
                                         component={LocationContract.renderLocationInput}
-                                        label="Latitude X1M"
+                                        label="Latitude"
                                     />
                                 </div>
                                 <br />
@@ -169,7 +169,7 @@ class LocationContract extends Component {
                                     <Field
                                         name="longitude"
                                         component={LocationContract.renderLocationInput}
-                                        label="Longitude X1M"
+                                        label="Longitude"
                                     />
                                 </div>
                                 <br />
