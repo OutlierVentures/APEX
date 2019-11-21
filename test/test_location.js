@@ -110,12 +110,12 @@ contract("LocationContract", accounts => {
 
         // Decrypt Enigma task result
         task = await enigma.decryptTaskResult(task);
-        let northernmostLocation = web3.eth.abi.decodeParameters([{
+        let clusters = web3.eth.abi.decodeParameters([{
             type: 'int32',
-            name: 'northernmostLocation',
-        }], task.decryptedOutput).northernmostLocation;
+            name: 'clusters',
+        }], task.decryptedOutput).clusters;
 
-        expect(northernmostLocation).to.equal(location2.toString());
+        expect(clusters).to.equal(location2.toString());
     });
 
 });

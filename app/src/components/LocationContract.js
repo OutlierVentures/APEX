@@ -128,11 +128,11 @@ class LocationContract extends Component {
             // Decrypt the task result - obtains the decrypted, abi-encoded output
             task = await this.props.enigma.decryptTaskResult(task);
             // Abi-decode the output to its desired components
-            const northernmostLocationAddress = this.props.enigma.web3.eth.abi.decodeParameters([{
+            const clustersAddress = this.props.enigma.web3.eth.abi.decodeParameters([{
                 type: 'string',
-                name: 'northernmostLocation',
-            }], task.decryptedOutput).northernmostLocation;
-            this.props.computeClusters(northernmostLocationAddress);
+                name: 'clusters',
+            }], task.decryptedOutput).clusters;
+            this.props.computeClusters(clustersAddress);
         } else {
             openSnackbar({ message: 'Task failed: did not compute northernmost location' });
         }
@@ -189,8 +189,8 @@ class LocationContract extends Component {
                             <h4>Northernmost Telco User</h4>
                             <p>
                                 {
-                                    this.props.northernmostLocation !== null ?
-                                        this.props.northernmostLocation // Divide result by 1M again to get latitude
+                                    this.props.clusters !== null ?
+                                        this.props.clusters // Divide result by 1M again to get latitude
                                         :
                                         "Not yet computed"
                                 }
@@ -213,7 +213,7 @@ const mapStateToProps = (state) => {
         enigma: state.enigma,
         accounts: state.accounts,
         deployedLocationContract: state.deployedLocationContract,
-        northernmostLocation: state.northernmostLocation
+        clusters: state.clusters
     }
 };
 export default connect(mapStateToProps, { computeClusters })(reduxForm({

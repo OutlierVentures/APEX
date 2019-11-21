@@ -29,12 +29,12 @@ const deployedLocationContractReducer = (deployedLocationContract = null, action
 };
 
 // Responds to computeClusters action to save northernmost location
-const computeClustersReducer = (northernmostLocation = null, action) => {
+const computeClustersReducer = (clusters = null, action) => {
     if (action.type === 'NORTHERNMOST_LOCATION_COMPUTED') {
         return action.payload;
     }
 
-    return northernmostLocation;
+    return clusters;
 };
 
 // Responds to notifyMessage action to save snackbar open status and any contained message
@@ -51,7 +51,7 @@ export default combineReducers({
     enigma: initializeEnigmaReducer,
     accounts: initializeAccountsReducer,
     deployedLocationContract: deployedLocationContractReducer,
-    northernmostLocation: computeClustersReducer,
+    clusters: computeClustersReducer,
     notification: notifyMessageReducer,
     form: formReducer
 });
