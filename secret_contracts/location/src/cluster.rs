@@ -35,22 +35,29 @@ impl LocationContract {
         write_state!(LOCATIONS => locations);
     }
 
-    pub fn cluster() -> (Vec<i32>, Vec<i32>) {
+    pub fn compute_northernmost() -> String {
         let locations = Self::get_locations();
         let mut eucvec: Vec<Euclid<_>> = Vec::new();
         for point in &locations {
-            eucvec.push(Euclid([point.latitude as f64, point.longitude as f64]));
+                eucvec.push(Euclid([point.latitude as f64, point.longitude as f64]));
         }
         let k = 3;
         let kmeans = Kmeans::new(&eucvec, k);
         let clusters = kmeans.clusters();
-        let mut xvec: Vec<i32> = Vec::new();
-        let mut yvec: Vec<i32> = Vec::new();
+        let mut clustvec: Vec<(f64, f64)> = Vec::new();
         for result in &clusters {
-            xvec.push((result.0).0[0] as i32);
-            yvec.push((result.0).0[0] as i32);
+            // Divide by 1M as input is multiplied by 1M - can only store ints
+                clustvec.push(((result.0).0[0] / 1000000.0, (result.0).0[1] / 1000000.0));
         }
-        (xvec, yvec)
+        eformat!("{:?}", clustvec)
+        //let mut xvec: Vec<i32> = Vec::new();
+        //let mut yvec: Vec<i32> = Vec::new();
+        //for result in &clusters {
+        //      xvec.push((result.0).0[0] as i32);
+        //      yvec.push((result.0).0[0] as i32);
+        //}
+        //let result = eformat!("{:?}{:?}", xvec, yvec); 
+        //result
     }
 }
 
