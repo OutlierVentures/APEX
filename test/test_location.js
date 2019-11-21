@@ -87,7 +87,7 @@ contract("LocationContract", accounts => {
     });
 
     it('should execute task to compute northernmost location', async() => {
-        let taskFn = 'compute_northernmost()';
+        let taskFn = 'cluster()';
         let taskArgs = [];
         let taskGasLimit = 500000;
         let taskGasPx = utils.toGrains(1);

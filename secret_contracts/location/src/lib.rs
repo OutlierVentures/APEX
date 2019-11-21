@@ -35,7 +35,7 @@ impl LocationContract {
         write_state!(LOCATIONS => locations);
     }
 
-    pub fn compute_northernmost() -> String {
+    pub fn cluster() -> String {
         let locations = Self::get_locations();
         let mut eucvec: Vec<Euclid<_>> = Vec::new();
         for point in &locations {

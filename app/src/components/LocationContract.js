@@ -95,7 +95,7 @@ class LocationContract extends Component {
     // Callback when compute northernmost button is clicked
     async onComputeNorthernmost() {
         // Create compute task metadata
-        const taskFn = 'compute_northernmost()';
+        const taskFn = 'cluster()';
         const taskArgs = [];
         const taskGasLimit = 10000000;
         const taskGasPx = utils.toGrains(1e-7);
