@@ -129,7 +129,7 @@ class LocationContract extends Component {
             task = await this.props.enigma.decryptTaskResult(task);
             // Abi-decode the output to its desired components
             const northernmostLocationAddress = this.props.enigma.web3.eth.abi.decodeParameters([{
-                type: 'int32',
+                type: 'string',
                 name: 'northernmostLocation',
             }], task.decryptedOutput).northernmostLocation;
             this.props.computeNorthernmost(northernmostLocationAddress);
@@ -190,7 +190,7 @@ class LocationContract extends Component {
                             <p>
                                 {
                                     this.props.northernmostLocation !== null ?
-                                        this.props.northernmostLocation / 1000000 // Divide result by 1M again to get latitude
+                                        this.props.northernmostLocation // Divide result by 1M again to get latitude
                                         :
                                         "Not yet computed"
                                 }
