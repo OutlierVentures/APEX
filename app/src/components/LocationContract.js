@@ -14,7 +14,7 @@ import TextField from "@material-ui/core/TextField/TextField";
 // Imports - Components
 import Notifier, {openSnackbar} from "./Notifier";
 // Imports - Reducers (Redux)
-import { computeNorthernmost } from "../actions";
+import { computeClusters } from "../actions";
 // Imports - enigma-js client library utility packages
 import { utils, eeConstants } from 'enigma-js';
 
@@ -26,7 +26,7 @@ class LocationContract extends Component {
     constructor(props) {
         super(props);
         this.onAddLocation = this.onAddLocation.bind(this);
-        this.onComputeNorthernmost = this.onComputeNorthernmost.bind(this);
+        this.oncomputeClusters = this.oncomputeClusters.bind(this);
     }
 
     // Redux form/material-ui render net worth text field component
@@ -93,7 +93,7 @@ class LocationContract extends Component {
     }
 
     // Callback when compute northernmost button is clicked
-    async onComputeNorthernmost() {
+    async oncomputeClusters() {
         // Create compute task metadata
         const taskFn = 'cluster()';
         const taskArgs = [];
@@ -132,7 +132,7 @@ class LocationContract extends Component {
                 type: 'string',
                 name: 'northernmostLocation',
             }], task.decryptedOutput).northernmostLocation;
-            this.props.computeNorthernmost(northernmostLocationAddress);
+            this.props.computeClusters(northernmostLocationAddress);
         } else {
             openSnackbar({ message: 'Task failed: did not compute northernmost location' });
         }
@@ -196,7 +196,7 @@ class LocationContract extends Component {
                                 }
                             </p>
                             <Button
-                                onClick={this.onComputeNorthernmost}
+                                onClick={this.oncomputeClusters}
                                 variant='contained'
                                 color='primary'>
                                 Compute Northernmost
@@ -216,6 +216,6 @@ const mapStateToProps = (state) => {
         northernmostLocation: state.northernmostLocation
     }
 };
-export default connect(mapStateToProps, { computeNorthernmost })(reduxForm({
+export default connect(mapStateToProps, { computeClusters })(reduxForm({
     form: 'addLocation',
 })(LocationContract));

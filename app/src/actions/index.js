@@ -26,7 +26,7 @@ export const deployLocationContract = (deployedLocationContract) => {
 };
 
 // Redux action for when northernmost location has been computed
-export const computeNorthernmost = (northernmostLocation) => {
+export const computeClusters = (northernmostLocation) => {
     return {
         type: 'NORTHERNMOST_LOCATION_COMPUTED',
         payload: northernmostLocation

@@ -28,8 +28,8 @@ const deployedLocationContractReducer = (deployedLocationContract = null, action
     return deployedLocationContract;
 };
 
-// Responds to computeNorthernmost action to save northernmost location
-const computeNorthernmostReducer = (northernmostLocation = null, action) => {
+// Responds to computeClusters action to save northernmost location
+const computeClustersReducer = (northernmostLocation = null, action) => {
     if (action.type === 'NORTHERNMOST_LOCATION_COMPUTED') {
         return action.payload;
     }
@@ -51,7 +51,7 @@ export default combineReducers({
     enigma: initializeEnigmaReducer,
     accounts: initializeAccountsReducer,
     deployedLocationContract: deployedLocationContractReducer,
-    northernmostLocation: computeNorthernmostReducer,
+    northernmostLocation: computeClustersReducer,
     notification: notifyMessageReducer,
     form: formReducer
 });
