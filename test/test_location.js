@@ -86,7 +86,7 @@ contract("LocationContract", accounts => {
         expect(await finalTaskStatus()).to.equal(eeConstants.ETH_STATUS_VERIFIED);
     });
 
-    it('should execute task to compute northernmost location', async() => {
+    it('should execute task to compute clusters', async() => {
         let taskFn = 'cluster()';
         let taskArgs = [];
         let taskGasLimit = 500000;
@@ -99,7 +99,7 @@ contract("LocationContract", accounts => {
         expect(await finalTaskStatus()).to.equal(eeConstants.ETH_STATUS_VERIFIED);
     });
 
-    it('should get the result and verify the computation of northernmost location is correct', async() => {
+    it('should get the result and verify the computation of clusters is correct', async() => {
         // Get Enigma task result
         task = await new Promise((resolve, reject) => {
             enigma.getTaskResult(task)

@@ -25,10 +25,10 @@ export const deployLocationContract = (deployedLocationContract) => {
     };
 };
 
-// Redux action for when northernmost location has been computed
+// Redux action for when clusters has been computed
 export const computeClusters = (clusters) => {
     return {
-        type: 'NORTHERNMOST_LOCATION_COMPUTED',
+        type: 'CLUSTERS_COMPUTED',
         payload: clusters
     };
 };

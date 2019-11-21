@@ -92,7 +92,7 @@ class LocationContract extends Component {
         this.props.reset('addLocation');
     }
 
-    // Callback when compute northernmost button is clicked
+    // Callback when compute clusters button is clicked
     async oncomputeClusters() {
         // Create compute task metadata
         const taskFn = 'cluster()';
@@ -107,18 +107,18 @@ class LocationContract extends Component {
                     if (error.hasOwnProperty('message')){
                         openSnackbar({ message: error.message});
                     } else {
-                        openSnackbar({ message: 'Failed to compute northernmost'});
+                        openSnackbar({ message: 'Failed to compute clusters'});
                     }
                     reject(error);
                 });
         });
-        openSnackbar({ message: 'Task pending: computing northernmost location' });
+        openSnackbar({ message: 'Task pending: computing clusters' });
         while (task.ethStatus === 1) {
             task = await this.props.enigma.getTaskRecordStatus(task);
             await sleep(1000);
         }
         if (task.ethStatus === 2) {
-            openSnackbar({ message: 'Task succeeded: computed northernmost location' });
+            openSnackbar({ message: 'Task succeeded: computed clusters' });
             // Get task result by passing in existing task - obtains the encrypted, abi-encoded output
             task = await new Promise((resolve, reject) => {
                 this.props.enigma.getTaskResult(task)
@@ -134,7 +134,7 @@ class LocationContract extends Component {
             }], task.decryptedOutput).clusters;
             this.props.computeClusters(clustersAddress);
         } else {
-            openSnackbar({ message: 'Task failed: did not compute northernmost location' });
+            openSnackbar({ message: 'Task failed: did not compute clusters' });
         }
     }
 
@@ -186,7 +186,7 @@ class LocationContract extends Component {
                     </Grid>
                     <Grid item xs={6}>
                         <div>
-                            <h4>Northernmost Telco User</h4>
+                            <h4>clusters Telco User</h4>
                             <p>
                                 {
                                     this.props.clusters !== null ?
@@ -199,7 +199,7 @@ class LocationContract extends Component {
                                 onClick={this.oncomputeClusters}
                                 variant='contained'
                                 color='primary'>
-                                Compute Northernmost
+                                Compute clusters
                             </Button>
                         </div>
                     </Grid>

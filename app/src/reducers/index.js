@@ -28,9 +28,9 @@ const deployedLocationContractReducer = (deployedLocationContract = null, action
     return deployedLocationContract;
 };
 
-// Responds to computeClusters action to save northernmost location
+// Responds to computeClusters action to save clusters
 const computeClustersReducer = (clusters = null, action) => {
-    if (action.type === 'NORTHERNMOST_LOCATION_COMPUTED') {
+    if (action.type === 'CLUSTERS_COMPUTED') {
         return action.payload;
     }
 
