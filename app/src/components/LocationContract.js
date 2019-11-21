@@ -142,7 +142,7 @@ class LocationContract extends Component {
         if (this.props.deployedLocationContract === null) {
             return (
                 <div>
-                    <Message color="red">Location secret contract not yet deployed...</Message>
+                    <Message color="red">Secret contract not yet deployed...</Message>
                 </div>
             )
         }
@@ -150,7 +150,7 @@ class LocationContract extends Component {
             <div>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
-                        <h3>Location Secret Contract Address: {this.props.deployedLocationContract}</h3>
+                        <h3>Secret Contract Address: {this.props.deployedLocationContract}</h3>
                     </Grid>
                     <Grid item xs={6}>
                         <div>
@@ -186,11 +186,11 @@ class LocationContract extends Component {
                     </Grid>
                     <Grid item xs={6}>
                         <div>
-                            <h4>clusters Telco User</h4>
+                            <h4>Cluster Telco Users</h4>
                             <p>
                                 {
                                     this.props.clusters !== null ?
-                                        this.props.clusters // Divide result by 1M again to get latitude
+                                        this.props.clusters
                                         :
                                         "Not yet computed"
                                 }
@@ -199,7 +199,7 @@ class LocationContract extends Component {
                                 onClick={this.oncomputeClusters}
                                 variant='contained'
                                 color='primary'>
-                                Compute clusters
+                                Compute clusters privately
                             </Button>
                         </div>
                     </Grid>
