@@ -29,6 +29,7 @@ impl LocationContract {
         read_state!(LOCATIONS).unwrap_or_default()
     }
 
+    // Input latitude and longitude X1M (multiplied in EnigmaJS) as Enimga can't store floats
     pub fn add_location(latitude: i32, longitude: i32) {
         let mut locations = Self::get_locations();
         locations.push(Location{latitude, longitude});
@@ -39,7 +40,7 @@ impl LocationContract {
         let locations = Self::get_locations();
         let mut eucvec: Vec<Euclid<_>> = Vec::new();
         for point in &locations {
-                eucvec.push(Euclid([point.latitude as f64, point.longitude as f64]));
+            eucvec.push(Euclid([point.latitude as f64, point.longitude as f64]));
         }
         let k = 3;
         let kmeans = Kmeans::new(&eucvec, k);
@@ -47,17 +48,9 @@ impl LocationContract {
         let mut clustvec: Vec<(f64, f64)> = Vec::new();
         for result in &clusters {
             // Divide by 1M as input is multiplied by 1M - can only store ints
-                clustvec.push(((result.0).0[0] / 1000000.0, (result.0).0[1] / 1000000.0));
+            clustvec.push(((result.0).0[0] / 1000000.0, (result.0).0[1] / 1000000.0));
         } 
         eformat!("{:?}", clustvec)
-        //let mut xvec: Vec<i32> = Vec::new();
-        //let mut yvec: Vec<i32> = Vec::new();
-        //for result in &clusters {
-        //      xvec.push((result.0).0[0] as i32);
-        //      yvec.push((result.0).0[0] as i32);
-        //}
-        //let result = eformat!("{:?}{:?}", xvec, yvec); 
-        //result
     }
 }
 
