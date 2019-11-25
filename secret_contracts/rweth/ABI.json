@@ -1,0 +1,20 @@
+[
+	{
+		"constant": false,
+		"inputs": [{"name": "data", "type": "string"}],
+		"name": "writeData",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "readData",
+		"outputs": [{"name": "", "type": "string"}],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+    }
+]
