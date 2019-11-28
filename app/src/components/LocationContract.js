@@ -17,6 +17,8 @@ import Notifier, {openSnackbar} from "./Notifier";
 import { computeClusters } from "../actions";
 // Imports - enigma-js client library utility packages
 import { utils, eeConstants } from 'enigma-js';
+import GoogleMapReact from 'google-map-react';
+const Point = ({ text }) => <div>{text}</div>;
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -188,12 +190,29 @@ class LocationContract extends Component {
                         <div>
                             <h4>Cluster Telco Users</h4>
                             <p>
-                                {
-                                    this.props.clusters !== null ?
-                                        this.props.clusters
-                                        :
-                                        "Not yet computed"
-                                }
+                                <div style={{ height: '100vh', width: '100%' }}>
+                                    <GoogleMapReact
+                                    bootstrapURLKeys={{ key: "AIzaSyCd2xxw5-95c7a_a2JNO4O47JxhJLGQiOg" }}
+                                    defaultCenter={{ lat: 59.95, lng: 30.33}}
+                                    defaultZoom={11}
+                                    >
+                                        <Point
+                                            lat={this.props.clusters[0][0]}
+                                            lng={this.props.clusters[0][1]}
+                                            text="Cell tower"
+                                        />
+                                        <Point
+                                            lat={this.props.clusters[1][0]}
+                                            lng={this.props.clusters[1][1]}
+                                            text="Cell tower"
+                                        />
+                                        <Point
+                                            lat={this.props.clusters[2][0]}
+                                            lng={this.props.clusters[2][1]}
+                                            text="Cell tower"
+                                        />
+                                    </GoogleMapReact>
+                                </div>
                             </p>
                             <Button
                                 onClick={this.oncomputeClusters}
@@ -213,7 +232,7 @@ const mapStateToProps = (state) => {
         enigma: state.enigma,
         accounts: state.accounts,
         deployedLocationContract: state.deployedLocationContract,
-        clusters: state.clusters
+        clusters: state.clusters !== null ? JSON.parse(state.clusters.replace(/\(/g,'[').replace(/\)/g,']')) : [[0,0],[0,0],[0,0]]
     }
 };
 export default connect(mapStateToProps, { computeClusters })(reduxForm({
