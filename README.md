@@ -1,6 +1,6 @@
 # Enigma Supply Chain
 
-Shared industry analytics for supply chain enterprises. Enigma private compute allows all participants to share in industry-wide analytics without revealing any information regarding their own operations.
+Shared industry analytics for supply chain enterprises. Enigma private compute allows all participants to share in industry-wide analytics without revealing any information regarding their own operations. Currently runs a clustering algorithm on lat/long data inputs.
 
 ## Requirements
 
