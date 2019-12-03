@@ -36,14 +36,13 @@ impl LocationContract {
         write_state!(LOCATIONS => locations);
     }
 
-    pub fn cluster() -> String {
+    pub fn cluster(num_clusters: i32) -> String {
         let locations = Self::get_locations();
         let mut eucvec: Vec<Euclid<_>> = Vec::new();
         for point in &locations {
             eucvec.push(Euclid([point.latitude as f64, point.longitude as f64]));
         }
-        let k = 3;
-        let kmeans = Kmeans::new(&eucvec, k);
+        let kmeans = Kmeans::new(&eucvec, num_clusters as usize);
         let clusters = kmeans.clusters();
         let mut clustvec: Vec<(f64, f64)> = Vec::new();
         for result in &clusters {
