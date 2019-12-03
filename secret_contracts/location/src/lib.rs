@@ -2,6 +2,7 @@
 extern crate eng_wasm;
 extern crate eng_wasm_derive;
 extern crate serde;
+extern crate serde_json;
 extern crate cogset;
 use eng_wasm::*;
 use eng_wasm_derive::pub_interface;
@@ -12,7 +13,7 @@ use cogset::{Euclid, Kmeans};
 static LOCATIONS: &str = "locations";
 
 // Structs
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone)]
 pub struct Location {
     // Multiply by 1M - contracts only support integers
     latitude: i32,
@@ -29,10 +30,13 @@ impl LocationContract {
         read_state!(LOCATIONS).unwrap_or_default()
     }
 
-    // Input latitude and longitude X1M (multiplied in EnigmaJS) as Enimga can't store floats
-    pub fn add_location(latitude: i32, longitude: i32) {
+    // Input latitude and longitude X1M (multiplied in EnigmaJS) as Enigma can't store floats
+    pub fn add_location(lat_long_json: String) {
+        let array: Vec<Location> = serde_json::from_str(&lat_long_json).unwrap();
         let mut locations = Self::get_locations();
-        locations.push(Location{latitude, longitude});
+        for elem in array.iter().cloned() {
+            locations.push(elem);
+        }
         write_state!(LOCATIONS => locations);
     }
 
