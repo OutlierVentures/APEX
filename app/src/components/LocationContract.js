@@ -95,10 +95,10 @@ class LocationContract extends Component {
     }
 
     // Callback when compute clusters button is clicked
-    async oncomputeClusters() {
+    async oncomputeClusters({ numclusters }) {
         // Create compute task metadata
-        const taskFn = 'cluster()';
-        const taskArgs = [];
+        const taskFn = 'cluster(int32)';
+        const taskArgs = [[numclusters, 'int32']];
         const taskGasLimit = 10000000;
         const taskGasPx = utils.toGrains(1e-7);
         let task = await new Promise((resolve, reject) => {
@@ -189,7 +189,7 @@ class LocationContract extends Component {
                     <Grid item xs={6}>
                         <div>
                             <h4>Cluster Telco Users</h4>
-                            <p>
+                            <div>
                                 <div style={{ height: '100vh', width: '100%' }}>
                                     <GoogleMapReact
                                     bootstrapURLKeys={{ key: "AIzaSyCd2xxw5-95c7a_a2JNO4O47JxhJLGQiOg" }}
@@ -213,13 +213,25 @@ class LocationContract extends Component {
                                         />
                                     </GoogleMapReact>
                                 </div>
-                            </p>
-                            <Button
-                                onClick={this.oncomputeClusters}
-                                variant='contained'
-                                color='primary'>
-                                Compute clusters privately
-                            </Button>
+                                <form>
+                                    <div>
+                                        <Field
+                                            name="numclusters"
+                                            component={LocationContract.renderLocationInput}
+                                            label="Number of clusters"
+                                        />
+                                    </div>
+                                    <br />
+                                    <div>
+                                        <Button
+                                            onClick={this.props.handleSubmit(this.oncomputeClusters)}
+                                            variant='outlined'
+                                            color='secondary'>
+                                            Submit
+                                        </Button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </Grid>
                 </Grid>
