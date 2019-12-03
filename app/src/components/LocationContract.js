@@ -148,6 +148,14 @@ class LocationContract extends Component {
                 </div>
             )
         }
+        var points = [];
+        for (var i = 0; i < this.props.clusters.length; i++) {
+            points.push(<Point
+                lat={this.props.clusters[i][0]}
+                lng={this.props.clusters[i][1]}
+                text="X"
+            />);
+        }
         return (
             <div>
                 <Grid container spacing={3}>
@@ -196,21 +204,7 @@ class LocationContract extends Component {
                                     defaultCenter={{ lat: 59.95, lng: 30.33}}
                                     defaultZoom={11}
                                     >
-                                        <Point
-                                            lat={this.props.clusters[0][0]}
-                                            lng={this.props.clusters[0][1]}
-                                            text="Cell tower"
-                                        />
-                                        <Point
-                                            lat={this.props.clusters[1][0]}
-                                            lng={this.props.clusters[1][1]}
-                                            text="Cell tower"
-                                        />
-                                        <Point
-                                            lat={this.props.clusters[2][0]}
-                                            lng={this.props.clusters[2][1]}
-                                            text="Cell tower"
-                                        />
+                                        {points}
                                     </GoogleMapReact>
                                 </div>
                                 <form>
@@ -244,7 +238,7 @@ const mapStateToProps = (state) => {
         enigma: state.enigma,
         accounts: state.accounts,
         deployedLocationContract: state.deployedLocationContract,
-        clusters: state.clusters !== null ? JSON.parse(state.clusters.replace(/\(/g,'[').replace(/\)/g,']')) : [[0,0],[0,0],[0,0]]
+        clusters: state.clusters !== null ? JSON.parse(state.clusters.replace(/\(/g,'[').replace(/\)/g,']')) : [[0,0]]
     }
 };
 export default connect(mapStateToProps, { computeClusters })(reduxForm({
