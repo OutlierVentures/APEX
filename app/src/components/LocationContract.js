@@ -238,7 +238,7 @@ const mapStateToProps = (state) => {
         enigma: state.enigma,
         accounts: state.accounts,
         deployedLocationContract: state.deployedLocationContract,
-        clusters: state.clusters !== null ? JSON.parse(state.clusters.replace(/\(/g,'[').replace(/\)/g,']')) : [[0,0]]
+        clusters: state.clusters !== null ? JSON.parse(state.clusters.replace(/\(/g,'[').replace(/\)/g,']')) : []
     }
 };
 export default connect(mapStateToProps, { computeClusters })(reduxForm({
