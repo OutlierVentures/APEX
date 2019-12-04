@@ -36,6 +36,24 @@ class LocationContract extends Component {
         return (
             <TextField
                 label={label}
+                type="text"
+                multiline
+                rows="10"
+                placeholder={label}
+                 error={touched && invalid}
+                helperText={touched && error}
+                {...input}
+                {...custom}
+                fullWidth
+            />
+        )
+    }
+
+    // Redux form/material-ui render net worth text field component
+    static renderNumericInput({label, input, meta: { touched, invalid, error }, ...custom }) {
+        return (
+            <TextField
+                label={label}
                 type="number"
                 placeholder={label}
                  error={touched && invalid}
@@ -48,7 +66,7 @@ class LocationContract extends Component {
     }
 
     // Redux form callback when add location info is submitted
-    async onAddLocation({ latitude, longitude } ) {
+    async onAddLocation({ locationstring } ) {
         // Create compute task metadata
         // computeTask(
         //      fn - the signature of the function we are calling (Solidity-types, no spaces)
@@ -58,12 +76,9 @@ class LocationContract extends Component {
         //      sender - Ethereum address deploying the contract
         //      scAddr - the secret contract address for which this computation task belongs to
         // )
-        const taskFn = 'add_location(int32,int32)';
+        const taskFn = 'add_location(string)';
         // Multiply by 1M as contracts only take ints
-        const taskArgs = [
-            [latitude * 1000000, 'int32'],
-            [longitude * 1000000, 'int32'],
-        ];
+        const taskArgs = [[locationstring, 'string']];
         const taskGasLimit = 10000000;
         const taskGasPx = utils.toGrains(1e-7);
         let task = await new Promise((resolve, reject) => {
@@ -169,17 +184,9 @@ class LocationContract extends Component {
                             <form>
                                 <div>
                                     <Field
-                                        name="latitude"
+                                        name="locationstring"
                                         component={LocationContract.renderLocationInput}
-                                        label="Latitude"
-                                    />
-                                </div>
-                                <br />
-                                <div>
-                                    <Field
-                                        name="longitude"
-                                        component={LocationContract.renderLocationInput}
-                                        label="Longitude"
+                                        label="Location JSON array"
                                     />
                                 </div>
                                 <br />
@@ -211,7 +218,7 @@ class LocationContract extends Component {
                                     <div>
                                         <Field
                                             name="numclusters"
-                                            component={LocationContract.renderLocationInput}
+                                            component={LocationContract.renderNumericInput}
                                             label="Number of clusters"
                                         />
                                     </div>
