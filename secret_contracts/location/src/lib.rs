@@ -20,6 +20,13 @@ pub struct Location {
     longitude: i32,
 }
 
+#[derive(Serialize, Deserialize, Clone)]
+pub struct LocationInput {
+    latitude: f64,
+    longitude: f64,
+}
+
+
 struct LocationContract;
 
 #[pub_interface]
@@ -32,9 +39,18 @@ impl LocationContract {
 
     // Input latitude and longitude X1M (multiplied in EnigmaJS) as Enigma can't store floats
     pub fn add_location(lat_long_json: String) {
-        let array: Vec<Location> = serde_json::from_str(&lat_long_json).unwrap();
+        let array: Vec<LocationInput> = serde_json::from_str(&lat_long_json).unwrap();
+        let mut tostore: Vec<Location> = Vec::new();
+        for elem in array.iter() {
+            tostore.push(
+                Location {
+                    latitude: (elem.latitude * 1000000.0) as i32,
+                    longitude: (elem.longitude * 1000000.0) as i32
+                }
+            );
+        }
         let mut locations = Self::get_locations();
-        for elem in array.iter().cloned() {
+        for elem in tostore.iter().cloned() {
             locations.push(elem);
         }
         write_state!(LOCATIONS => locations);
