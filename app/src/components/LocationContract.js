@@ -18,6 +18,7 @@ import { computeClusters } from "../actions";
 // Imports - enigma-js client library utility packages
 import { utils, eeConstants } from 'enigma-js';
 import GoogleMapReact from 'google-map-react';
+import * as assert from 'assert';
 const Point = ({ text }) => <div>{text}</div>;
 
 function sleep(ms) {
@@ -67,6 +68,22 @@ class LocationContract extends Component {
 
     // Redux form callback when add location info is submitted
     async onAddLocation({ locationstring } ) {
+        // Sanitise input - check for valid JSON of latitudes / longitudes.
+        try {
+            var locations = JSON.parse(locationstring);
+            assert(Array.isArray(locations));
+            for (var i = 0; i < locations.length; i++) {
+                var keys = Object.keys(locations[i]);
+                assert(keys.length === 2);
+                assert(keys[0] === "latitude");
+                assert(keys[1] === "longitude");
+                assert(typeof locations[i].latitude === "number" && Math.abs(locations[i].latitude) < 90.0);
+                assert(typeof locations[i].longitude === "number" && Math.abs(locations[i].longitude) < 180.0);
+            }
+        } catch {
+            openSnackbar({ message: 'Invalid input: must be array of JSON latitude/longitude points' });
+            return
+        }
         // Create compute task metadata
         // computeTask(
         //      fn - the signature of the function we are calling (Solidity-types, no spaces)
