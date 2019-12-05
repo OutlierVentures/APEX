@@ -225,7 +225,7 @@ class LocationContract extends Component {
                                 <div style={{ height: '100vh', width: '100%' }}>
                                     <GoogleMapReact
                                     bootstrapURLKeys={{ key: "AIzaSyCd2xxw5-95c7a_a2JNO4O47JxhJLGQiOg" }}
-                                    defaultCenter={{ lat: 59.95, lng: 30.33}}
+                                    defaultCenter={{ lat: 51.507221, lng: -0.127600}}
                                     defaultZoom={11}
                                     >
                                         {points}
