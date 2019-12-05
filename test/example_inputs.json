@@ -1,0 +1,74 @@
+// TELCO 1
+[
+    {
+        "latitude": 51.507221,
+        "longitude": -0.127600
+    },
+    {
+        "latitude": 51.531900,
+        "longitude": -0.106272
+    },
+    {
+        "latitude": 51.507877,
+        "longitude": -0.087732
+    },
+    {
+        "latitude": 53.480759,
+        "longitude": -2.242631
+    },
+    {
+        "latitude": 53.489761,
+        "longitude": -2.272540
+    },
+    {
+        "latitude": 53.481170,
+        "longitude": -2.235970
+    }
+]
+
+
+// TELCO 2
+[
+    {
+        "latitude": 52.370216,
+        "longitude": 4.895168
+    },
+    {
+        "latitude": 52.377892,
+        "longitude": 4.899730 
+    },
+    {
+        "latitude": 52.324430,
+        "longitude": 4.930760
+    },
+    {
+        "latitude": 52.344720,
+        "longitude": 4.880060
+    }
+]
+
+
+// MALICIOUS ATTACKER 1
+[
+    {
+        "latitude": "in the arctic bro",
+        "longitude": 20
+    },
+    {
+        "latitude": 10,
+        "longitude": 21
+    }
+]
+
+
+// MALICIOUS ATTACKER 2
+[
+    {
+        "latitude": 10,
+        "longitude": 20
+    },
+    {
+        "latitude": 10,
+        "longitude": 200
+    }
+]
