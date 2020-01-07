@@ -86,10 +86,10 @@ impl LocationContract {
         eformat!("{:?}", clustvec)
     }
 
-    // TRAIN CLASSIFIER
+    // TRAIN CLASSIFIER AND RUN ON LOCATION DATA IN CONTRACT STATE
     // Could add shared training, i.e. contract state has LocationWithClass
     // In this case all parties must agree on the number of classes
-    pub fn train_classifier(lat_long_class_json: String) -> NaiveBayes::<Gaussian> {
+    pub fn classify(lat_long_class_json: String) -> String {
         // Deserialise data
         let array: Vec<LocationWithClassInput> = serde_json::from_str(&lat_long_class_json).unwrap();
         // Write data to matrices
@@ -116,12 +116,6 @@ impl LocationContract {
         // Train Gaussian Naive Bayes classifer on matrix
         let mut model = NaiveBayes::<Gaussian>::new();
         model.train(&inputs, &targets).unwrap();
-        model
-    }
-
-    // CLASSIFY LOCATIONS IN CONTRACT STATE
-    // Will need to train model on labelled data first
-    pub fn classify(model: NaiveBayes::<Gaussian>) -> String {
         // Get location data from contract state
         let locations = Self::get_locations();
         let mut input: Vec<f64> = Vec::new();
