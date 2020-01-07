@@ -85,8 +85,10 @@ impl LocationContract {
             input.push(point.latitude as f64);
             input.push(point.longitude as f64);
         }
+        // Create matrix for model
         // Predict using trained model
-        eformat!("in development")
+        let outputs = model.predict(&inputs).unwrap();
+        eformat!("{}", outputs)
     }
 
 }
