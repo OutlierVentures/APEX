@@ -87,7 +87,17 @@ impl LocationContract {
     pub fn train_classifier(lat_long_class_json: String) -> NaiveBayes::<Gaussian> {
         // Deserialise data
         let array: Vec<LocationWithClassInput> = serde_json::from_str(&lat_long_class_json).unwrap();
-        // Write data to matrix
+        // Write data to matrices
+        let mut locations: Vec<f64> = Vec::new();
+        let mut classes: Vec<i32> = Vec::new();
+        for elem in array.iter() {
+            locations.push(elem.latitude as f64);
+            locations.push(elem.longitude as f64);
+            classes.push(elem.class as i32);
+        }
+        let num_points = locations.len();
+        let inputs = Matrix::new(num_points, 2, locations);
+        // Create classes matrix
         // Train model on matrix
         NaiveBayes::<Gaussian>::new()
     }
