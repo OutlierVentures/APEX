@@ -86,8 +86,9 @@ impl LocationContract {
             input.push(point.longitude as f64);
         }
         // Create matrix for model
+        let matrix = Matrix::new(num_points, 2, input);
         // Predict using trained model
-        let outputs = model.predict(&inputs).unwrap();
+        let outputs = model.predict(&matrix).unwrap();
         eformat!("{}", outputs)
     }
 
