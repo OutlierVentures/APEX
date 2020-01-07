@@ -110,8 +110,10 @@ impl LocationContract {
             class_matrix.extend(&row)
         }
         let targets = Matrix::new(num_points, num_classes, class_matrix)
-        // Train model on matrix
-        NaiveBayes::<Gaussian>::new()
+        // Train Gaussian Naive Bayes classifer on matrix
+        let mut model = NaiveBayes::<Gaussian>::new();
+        model.train(&inputs, &targets).unwrap();
+        model
     }
 
     // CLASSIFY LOCATIONS IN CONTRACT STATE
