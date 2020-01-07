@@ -29,6 +29,13 @@ pub struct LocationInput {
     longitude: f64,
 }
 
+#[derive(Serialize, Deserialize, Clone)]
+pub struct LocationWithClassInput {
+    latitude: f64,
+    longitude: f64,
+    class: i32,
+}
+
 
 struct LocationContract;
 
@@ -75,8 +82,11 @@ impl LocationContract {
         eformat!("{:?}", clustvec)
     }
 
+    // Could add shared training, i.e. contract state has LocationWithClass
+    // In this case all parties must agree on the number of classes
     pub fn train_classifier(lat_long_class_json: String) -> NaiveBayes::<Gaussian> {
         // Deserialise data
+        let array: Vec<LocationWithClassInput> = serde_json::from_str(&lat_long_class_json).unwrap();
         // Write data to matrix
         // Train model on matrix
         NaiveBayes::<Gaussian>::new()
