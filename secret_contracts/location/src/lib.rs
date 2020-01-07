@@ -105,11 +105,12 @@ impl LocationContract {
         let num_classes = classes.iter().max();
         let mut class_matrix: Vec<f64> = Vec::new();
         for elem in &classes {
-            let mut row = vec![0; num_classes];
+            let mut row = Vec::new();
+            row.resize(num_classes, 0f64);
             row[elem - 1] = 1.0;
             class_matrix.extend(&row)
         }
-        let targets = Matrix::new(num_points, num_classes, class_matrix)
+        let targets = Matrix::new(num_points, num_classes, class_matrix);
         // Train Gaussian Naive Bayes classifer on matrix
         let mut model = NaiveBayes::<Gaussian>::new();
         model.train(&inputs, &targets).unwrap();
