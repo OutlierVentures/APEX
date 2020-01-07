@@ -4,11 +4,13 @@ extern crate eng_wasm_derive;
 extern crate serde;
 extern crate serde_json;
 extern crate cogset;
+extern crate rusty_machine;
 use eng_wasm::*;
 use eng_wasm_derive::pub_interface;
 use serde::{Serialize, Deserialize};
 use cogset::{Euclid, Kmeans};
 use rusty_machine::learning::naive_bayes::{NaiveBayes, Gaussian};
+use rusty_machine::linalg::Matrix;
 
 // Encrypted state keys
 static LOCATIONS: &str = "locations";
@@ -75,8 +77,8 @@ impl LocationContract {
 
     // Will need to train model on labelled data first
     pub fn classify(model: NaiveBayes::<Gaussian>) -> String {
-        //take location data from contract state
-        //predict using trained model
+        // Get location data from contract state
+        // Predict using trained model
         eformat!("in development")
     }
 
