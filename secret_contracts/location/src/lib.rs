@@ -75,6 +75,13 @@ impl LocationContract {
         eformat!("{:?}", clustvec)
     }
 
+    pub fn train_classifier(lat_long_class_json: String) -> NaiveBayes::<Gaussian> {
+        // Deserialise data
+        // Write data to matrix
+        // Train model on matrix
+        NaiveBayes::<Gaussian>::new()
+    }
+
     // Will need to train model on labelled data first
     pub fn classify(model: NaiveBayes::<Gaussian>) -> String {
         // Get location data from contract state
