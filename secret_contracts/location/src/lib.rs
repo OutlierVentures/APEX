@@ -11,6 +11,7 @@ use serde::{Serialize, Deserialize};
 use cogset::{Euclid, Kmeans};
 use rusty_machine::learning::naive_bayes::{NaiveBayes, Gaussian};
 use rusty_machine::linalg::Matrix;
+use rusty_machine::learning::SupModel; // Used by model.train
 
 // Encrypted state keys
 static LOCATIONS: &str = "locations";
@@ -102,12 +103,13 @@ impl LocationContract {
         let num_points = locations.len();
         let inputs = Matrix::new(num_points, 2, locations);
         // Create classes matrix
-        let num_classes = classes.iter().max();
+        let num_classes = *classes.iter().max().unwrap() as usize; // FIXME Will panic on empty list
         let mut class_matrix: Vec<f64> = Vec::new();
         for elem in &classes {
             let mut row = Vec::new();
             row.resize(num_classes, 0f64);
-            row[elem - 1] = 1.0;
+            let index = (elem - 1) as usize;
+            row[index] = 1.0;
             class_matrix.extend(&row)
         }
         let targets = Matrix::new(num_points, num_classes, class_matrix);
@@ -136,8 +138,3 @@ impl LocationContract {
     }
 
 }
-
-
-
-
-
