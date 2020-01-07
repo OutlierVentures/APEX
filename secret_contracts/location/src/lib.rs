@@ -43,10 +43,12 @@ struct LocationContract;
 
 impl LocationContract {
 
+    // GET LOCATION DATA FROM CONTRACT STATE
     fn get_locations() -> Vec<Location> {
         read_state!(LOCATIONS).unwrap_or_default()
     }
 
+    // ADD LAT/LONG LOCATION DATA TO CONTRACT STATE
     // Input latitude and longitude X1M (multiplied in EnigmaJS) as Enigma can't store floats
     pub fn add_location(lat_long_json: String) {
         let array: Vec<LocationInput> = serde_json::from_str(&lat_long_json).unwrap();
@@ -66,6 +68,7 @@ impl LocationContract {
         write_state!(LOCATIONS => locations);
     }
 
+    // CLUSTER LOCATIONS IN CONTRACT STATE
     pub fn cluster(num_clusters: i32) -> String {
         let locations = Self::get_locations();
         let mut eucvec: Vec<Euclid<_>> = Vec::new();
@@ -82,6 +85,7 @@ impl LocationContract {
         eformat!("{:?}", clustvec)
     }
 
+    // TRAIN CLASSIFIER
     // Could add shared training, i.e. contract state has LocationWithClass
     // In this case all parties must agree on the number of classes
     pub fn train_classifier(lat_long_class_json: String) -> NaiveBayes::<Gaussian> {
@@ -97,30 +101,31 @@ impl LocationContract {
         }
         let num_points = locations.len();
         let inputs = Matrix::new(num_points, 2, locations);
-        let num_classes = classes.iter().max();
         // Create classes matrix
+        let num_classes = classes.iter().max();
         let mut class_matrix: Vec<f64> = Vec::new();
         for elem in &classes {
             let mut row = vec![0; num_classes];
             row[elem - 1] = 1.0;
             class_matrix.extend(&row)
         }
-        let targets = Matrix::new(6, num_classes, class_matrix)
+        let targets = Matrix::new(num_points, num_classes, class_matrix)
         // Train model on matrix
         NaiveBayes::<Gaussian>::new()
     }
 
+    // CLASSIFY LOCATIONS IN CONTRACT STATE
     // Will need to train model on labelled data first
     pub fn classify(model: NaiveBayes::<Gaussian>) -> String {
         // Get location data from contract state
         let locations = Self::get_locations();
-        let num_points = locations.len();
         let mut input: Vec<f64> = Vec::new();
         for point in &locations {
             input.push(point.latitude as f64);
             input.push(point.longitude as f64);
         }
         // Create matrix for model
+        let num_points = locations.len();
         let matrix = Matrix::new(num_points, 2, input);
         // Predict using trained model
         let outputs = model.predict(&matrix).unwrap();
