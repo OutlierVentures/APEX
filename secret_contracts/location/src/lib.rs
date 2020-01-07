@@ -78,6 +78,13 @@ impl LocationContract {
     // Will need to train model on labelled data first
     pub fn classify(model: NaiveBayes::<Gaussian>) -> String {
         // Get location data from contract state
+        let locations = Self::get_locations();
+        let num_points = locations.len();
+        let mut input: Vec<f64> = Vec::new();
+        for point in &locations {
+            input.push(point.latitude as f64);
+            input.push(point.longitude as f64);
+        }
         // Predict using trained model
         eformat!("in development")
     }
