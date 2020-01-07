@@ -11,6 +11,7 @@ eng-wasm-derive = "0.1"
 serde = "1.0.84"
 serde_json = "1.0.42"
 cogset = "0.2"
+rusty_machine = "0.5.4"
 
 [profile.release]           # The release profile, used for `cargo build --release`.
 panic = "abort"             # panic strategy (`-C panic=...`)
