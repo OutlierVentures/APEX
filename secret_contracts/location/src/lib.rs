@@ -97,7 +97,15 @@ impl LocationContract {
         }
         let num_points = locations.len();
         let inputs = Matrix::new(num_points, 2, locations);
+        let num_classes = classes.iter().max();
         // Create classes matrix
+        let mut class_matrix: Vec<f64> = Vec::new();
+        for elem in &classes {
+            let mut row = vec![0; num_classes];
+            row[elem - 1] = 1.0;
+            class_matrix.extend(&row)
+        }
+        let targets = Matrix::new(6, num_classes, class_matrix)
         // Train model on matrix
         NaiveBayes::<Gaussian>::new()
     }
