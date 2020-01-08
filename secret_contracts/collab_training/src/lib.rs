@@ -60,9 +60,15 @@ impl LocationContract {
         read_state!(LOCATIONS).unwrap_or_default()
     }
 
+    // GET TRAINING DATA FROM CONTRACT STATE
+    fn get_training_data() -> Vec<LocationWithClass> {
+        read_state!(TRAININGDATA).unwrap_or_default()
+    }
+
     // ADD LAT/LONG LOCATION DATA TO CONTRACT STATE
-    // Input latitude and longitude X1M (multiplied in EnigmaJS) as Enigma can't store floats
+    // Input latitude and longitude X1M as Enigma can't store floats
     pub fn add_location(lat_long_json: String) {
+        // Input sanitised in EngimaJS to number type - but we must cast to int
         let array: Vec<LocationInput> = serde_json::from_str(&lat_long_json).unwrap();
         let mut tostore: Vec<Location> = Vec::new();
         for elem in array.iter() {
