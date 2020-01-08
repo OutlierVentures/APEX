@@ -33,6 +33,13 @@ pub struct LocationInput {
 }
 
 #[derive(Serialize, Deserialize, Clone)]
+pub struct LocationWithClass {
+    latitude: i32,
+    longitude: i32,
+    class: i32,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
 pub struct LocationWithClassInput {
     latitude: f64,
     longitude: f64,
