@@ -17,6 +17,7 @@ use rusty_machine::learning::SupModel; // Used by model.train
 
 // Encrypted state keys
 static LOCATIONS: &str = "locations";
+static TRAININGDATA: &str = "trainingdata"
 
 // Structs
 #[derive(Serialize, Deserialize, Clone)]
@@ -28,6 +29,7 @@ pub struct Location {
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct LocationInput {
+    // Multiply by 1M - contracts only support integers
     latitude: f64,
     longitude: f64,
 }
