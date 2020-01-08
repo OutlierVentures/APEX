@@ -1,6 +1,14 @@
 # Enigma Supply Chain
 
-Shared industry analytics for supply chain enterprises. Enigma private compute allows all participants to share in industry-wide analytics without revealing any information regarding their own operations. Currently runs a clustering algorithm on lat/long data inputs.
+Shared industry analytics for supply chain enterprises. Enigma private compute allows all participants to share in industry-wide analytics without revealing any information regarding their own operations.
+
+Features:
+
+- Clustering on collaborative lat/long location data (K-Means).
+- Classification of collaborative lat/long location data with training data supplied for each function call by each party privately (Gaussian Naive Bayes).
+- Collaborative training for a classifier which may then be applied to collaborative lat/long data (Gaussian Naive Bayes).
+- Data input serialisation/deserialisation and sanitation (JSON point list input).
+- UI for data input and drawing of outputs on a Google Map (currently clustering only).
 
 ## Requirements
 
