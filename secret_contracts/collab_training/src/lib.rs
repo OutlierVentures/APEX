@@ -17,7 +17,7 @@ use rusty_machine::learning::SupModel; // Used by model.train
 
 // Encrypted state keys
 static LOCATIONS: &str = "locations";
-static TRAININGDATA: &str = "trainingdata"
+static TRAININGDATA: &str = "trainingdata";
 
 // Structs
 #[derive(Serialize, Deserialize, Clone)]
@@ -94,14 +94,14 @@ impl LocationContract {
         let mut tostore: Vec<LocationWithClass> = Vec::new();
         for elem in array.iter() {
             tostore.push(
-                Location {
+                LocationWithClass {
                     latitude: (elem.latitude * 1000000.0) as i32,
                     longitude: (elem.longitude * 1000000.0) as i32,
                     class: elem.class as i32
                 }
             );
         }
-        let mut training_data = Self::get_locations();
+        let mut training_data = Self::get_training_data();
         for elem in tostore.iter().cloned() {
             training_data.push(elem);
         }
@@ -125,12 +125,9 @@ impl LocationContract {
         eformat!("{:?}", clustvec)
     }
 
-    // TRAIN CLASSIFIER AND RUN ON LOCATION DATA IN CONTRACT STATE
-    // Could add shared training, i.e. contract state has LocationWithClass
-    // In this case all parties must agree on the number of classes
-    pub fn classify(lat_long_class_json: String) -> String {
-        // Deserialise data
-        let array: Vec<LocationWithClassInput> = serde_json::from_str(&lat_long_class_json).unwrap();
+    // TRAIN CLASSIFIER ON TRAINING DATA AND RUN ON LOCATION DATA, BOTH FROM CONTRACT STATE
+    pub fn classify() -> String {
+        let array = Self::get_training_data();
         // Write data to matrices
         let mut locations: Vec<f64> = Vec::new();
         let mut classes: Vec<i32> = Vec::new();
