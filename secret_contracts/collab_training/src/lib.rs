@@ -45,7 +45,7 @@ pub struct LocationWithClass {
 pub struct LocationWithClassInput {
     latitude: f64,
     longitude: f64,
-    class: i32,
+    class: f64, // Float as EnigmaJS only sanitises to number type - cast to int in contract
 }
 
 
@@ -97,7 +97,7 @@ impl LocationContract {
                 Location {
                     latitude: (elem.latitude * 1000000.0) as i32,
                     longitude: (elem.longitude * 1000000.0) as i32,
-                    class: elem.class as i32 // Cast as EnigmaJS only sanitises to number, not int
+                    class: elem.class as i32
                 }
             );
         }
