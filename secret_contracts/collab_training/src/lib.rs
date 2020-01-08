@@ -86,6 +86,28 @@ impl LocationContract {
         write_state!(LOCATIONS => locations);
     }
 
+    // ADD LAT/LONG/CLASS TRAINING DATA TO CONTRACT STATE
+    // Input latitude and longitude X1M as Enigma can't store floats
+    pub fn add_training_data(lat_long_class_json: String) {
+        // Input sanitised in EngimaJS to number type - but we must cast to int
+        let array: Vec<LocationWithClassInput> = serde_json::from_str(&lat_long_class_json).unwrap();
+        let mut tostore: Vec<LocationWithClass> = Vec::new();
+        for elem in array.iter() {
+            tostore.push(
+                Location {
+                    latitude: (elem.latitude * 1000000.0) as i32,
+                    longitude: (elem.longitude * 1000000.0) as i32,
+                    class: elem.class as i32 // Cast as EnigmaJS only sanitises to number, not int
+                }
+            );
+        }
+        let mut training_data = Self::get_locations();
+        for elem in tostore.iter().cloned() {
+            training_data.push(elem);
+        }
+        write_state!(TRAININGDATA => training_data);
+    }
+
     // CLUSTER LOCATIONS IN CONTRACT STATE
     pub fn cluster(num_clusters: i32) -> String {
         let locations = Self::get_locations();
