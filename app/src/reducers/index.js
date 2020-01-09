@@ -37,6 +37,16 @@ const computeClustersReducer = (clusters = null, action) => {
     return clusters;
 };
 
+// Responds to classify action to save classes
+const classifyReducer = (classes = null, action) => {
+    if (action.type === 'CLASSES_COMPUTED') {
+        return action.payload;
+    }
+
+    return classes;
+};
+
+
 // Responds to notifyMessage action to save snackbar open status and any contained message
 const notifyMessageReducer = (notification = { open: false, message: '' }, action) => {
     if (action.type === 'MESSAGE_NOTIFIED') {
@@ -52,6 +62,7 @@ export default combineReducers({
     accounts: initializeAccountsReducer,
     deployedLocationContract: deployedLocationContractReducer,
     clusters: computeClustersReducer,
+    classes: classifyReducer,
     notification: notifyMessageReducer,
     form: formReducer
 });
