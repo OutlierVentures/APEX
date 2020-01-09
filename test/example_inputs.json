@@ -72,3 +72,57 @@
         "longitude": 200
     }
 ]
+
+// TRAINING DATA
+[
+    {
+        "latitude": 51.507221,
+        "longitude": -0.127600,
+        "class": 0
+    },
+    {
+        "latitude": 51.531900,
+        "longitude": -0.106272,
+        "class": 0
+    },
+    {
+        "latitude": 51.507877,
+        "longitude": -0.087732,
+        "class": 0
+    },
+    {
+        "latitude": 53.480759,
+        "longitude": -2.242631,
+        "class": 0
+    },
+    {
+        "latitude": 53.489761,
+        "longitude": -2.272540,
+        "class": 0
+    },
+    {
+        "latitude": 53.481170,
+        "longitude": -2.235970,     
+        "class": 0
+    },
+    {
+        "latitude": 52.370216,
+        "longitude": 4.895168,     
+        "class": 1
+    },
+    {
+        "latitude": 52.377892,
+        "longitude": 4.899730,
+        "class": 1
+    },
+    {
+        "latitude": 52.324430,
+        "longitude": 4.930760,  
+        "class": 1
+    },
+    {
+        "latitude": 52.344720,
+        "longitude": 4.880060,   
+        "class": 1
+    }
+]
