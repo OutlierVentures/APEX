@@ -239,7 +239,7 @@ class LocationContract extends Component {
     // Callback when classify button is clicked
     async onClassify() {
         // Create compute task metadata
-        const taskFn = 'cluster()';
+        const taskFn = 'classify()';
         const taskArgs = [];
         const taskGasLimit = 10000000;
         const taskGasPx = utils.toGrains(1e-7);
@@ -278,6 +278,7 @@ class LocationContract extends Component {
             }], task.decryptedOutput).classes; // NOTE make sure classes is an output property -------------------------------------------------
             this.props.classify(classesAddress);
         } else {
+            console.log(task)
             openSnackbar({ message: 'Task failed: did not run classification' });
         }
     }
@@ -386,6 +387,24 @@ class LocationContract extends Component {
                             </form>
                         </div>
                     </Grid>
+                    <Grid item xs={6}>
+                        <div>
+                            <h4>Classify Telco Users</h4>
+                            <div>
+                                <form>
+                                    <div>
+                                        <Button
+                                            onClick={this.props.handleSubmit(this.onClassify)}
+                                            variant='outlined'
+                                            color='secondary'>
+                                            Submit
+                                        </Button>
+                                        {this.props.classes}
+                                    </div>
+                                </form>
+                            </div> 
+                        </div>
+                    </Grid>
                 </Grid>
             </div>
         )
@@ -397,7 +416,7 @@ const mapStateToProps = (state) => {
         accounts: state.accounts,
         deployedLocationContract: state.deployedLocationContract,
         clusters: state.clusters !== null ? JSON.parse(state.clusters.replace(/\(/g,'[').replace(/\)/g,']')) : [],
-        classes: state.classes !== null ? JSON.parse(state.classes.replace(/\(/g,'[').replace(/\)/g,']')) : []
+        classes: state.classes !== null ? state.classes : ""
     }
 };
 export default connect(mapStateToProps, { computeClusters })(reduxForm({
