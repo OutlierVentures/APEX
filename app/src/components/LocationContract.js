@@ -379,6 +379,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, { computeClusters })(reduxForm({
     form: 'addLocation',
 })(LocationContract));
-export default connect(mapStateToProps, { classify })(reduxForm({
+export const ClassConnect = connect(mapStateToProps, { classify })(reduxForm({
     form: 'addLocationWithClass',
 })(LocationContract));
