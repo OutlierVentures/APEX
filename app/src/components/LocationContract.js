@@ -31,6 +31,7 @@ class LocationContract extends Component {
         this.onAddLocation = this.onAddLocation.bind(this);
         this.oncomputeClusters = this.oncomputeClusters.bind(this);
         this.onAddLocationWithClass = this.onAddLocationWithClass.bind(this);
+        this.onClassify = this.onClassify.bind(this);
     }
 
     // Redux form/material-ui render net worth text field component
