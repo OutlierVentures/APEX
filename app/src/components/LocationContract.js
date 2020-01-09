@@ -14,7 +14,7 @@ import TextField from "@material-ui/core/TextField/TextField";
 // Imports - Components
 import Notifier, {openSnackbar} from "./Notifier";
 // Imports - Reducers (Redux)
-import { computeClusters } from "../actions";
+import { computeClusters, classify } from "../actions";
 // Imports - enigma-js client library utility packages
 import { utils, eeConstants } from 'enigma-js';
 import GoogleMapReact from 'google-map-react';
@@ -378,4 +378,7 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps, { computeClusters })(reduxForm({
     form: 'addLocation',
+})(LocationContract));
+export default connect(mapStateToProps, { classify })(reduxForm({
+    form: 'addLocationWithClass',
 })(LocationContract));
