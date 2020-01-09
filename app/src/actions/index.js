@@ -25,11 +25,19 @@ export const deployLocationContract = (deployedLocationContract) => {
     };
 };
 
-// Redux action for when clusters has been computed
+// Redux action for when clusters have been computed
 export const computeClusters = (clusters) => {
     return {
         type: 'CLUSTERS_COMPUTED',
         payload: clusters
+    };
+};
+
+// Redux action for when classes have been computed
+export const classify = (classes) => {
+    return {
+        type: 'CLASSES_COMPUTED',
+        payload: classes
     };
 };
 
