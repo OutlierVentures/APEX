@@ -235,6 +235,52 @@ class LocationContract extends Component {
         this.props.reset('addLocationWithClass');
     }
 
+    // Callback when classify button is clicked
+    async onClassify() {
+        // Create compute task metadata
+        const taskFn = 'cluster()';
+        const taskArgs = [];
+        const taskGasLimit = 10000000;
+        const taskGasPx = utils.toGrains(1e-7);
+        let task = await new Promise((resolve, reject) => {
+            this.props.enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, this.props.accounts[0],
+                this.props.deployedLocationContract)
+                .on(eeConstants.SEND_TASK_INPUT_RESULT, (result) => resolve(result))
+                .on(eeConstants.ERROR, (error) => {
+                    if (error.hasOwnProperty('message')){
+                        openSnackbar({ message: error.message});
+                    } else {
+                        openSnackbar({ message: 'Failed to run classification'});
+                    }
+                    reject(error);
+                });
+        });
+        openSnackbar({ message: 'Task pending: classification' });
+        while (task.ethStatus === 1) {
+            task = await this.props.enigma.getTaskRecordStatus(task);
+            await sleep(1000);
+        }
+        if (task.ethStatus === 2) {
+            openSnackbar({ message: 'Task succeeded: classification' });
+            // Get task result by passing in existing task - obtains the encrypted, abi-encoded output
+            task = await new Promise((resolve, reject) => {
+                this.props.enigma.getTaskResult(task)
+                    .on(eeConstants.GET_TASK_RESULT_RESULT, (result) => resolve(result))
+                    .on(eeConstants.ERROR, (error) => reject(error));
+            });
+            // Decrypt the task result - obtains the decrypted, abi-encoded output
+            task = await this.props.enigma.decryptTaskResult(task);
+            // Abi-decode the output to its desired components
+            const classesAddress = this.props.enigma.web3.eth.abi.decodeParameters([{
+                type: 'string',
+                name: 'classes',
+            }], task.decryptedOutput).classes; // NOTE make sure classes is an output property -------------------------------------------------
+            this.props.classify(classesAddress);
+        } else {
+            openSnackbar({ message: 'Task failed: did not run classification' });
+        }
+    }
+
     render() {
         if (this.props.deployedLocationContract === null) {
             return (
