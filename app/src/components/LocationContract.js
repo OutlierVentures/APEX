@@ -362,6 +362,30 @@ class LocationContract extends Component {
                             </div>
                         </div>
                     </Grid>
+                    <Grid item xs={6}>
+                        <div>
+                            <Notifier />
+                            <h4>Add Classifier Training Data</h4>
+                            <form>
+                                <div>
+                                    <Field
+                                        name="locationwithclassstring"
+                                        component={LocationContract.renderLocationInput}
+                                        label="Location with class JSON array"
+                                    />
+                                </div>
+                                <br />
+                                <div>
+                                    <Button
+                                        onClick={this.props.handleSubmit(this.onAddLocationWithClass)}
+                                        variant='outlined'
+                                        color='secondary'>
+                                        Submit
+                                    </Button>
+                                </div>
+                            </form>
+                        </div>
+                    </Grid>
                 </Grid>
             </div>
         )
