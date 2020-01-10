@@ -14,23 +14,23 @@ struct EthContract;
 
 #[pub_interface]
 pub trait ContractInterface{
-    fn writeData(data: String);
-    fn readData() -> String;
+    fn write_data(data: String, address: String);
+    fn read_data(address: String) -> String;
 }
 
 pub struct Contract;
 
 impl ContractInterface for Contract {
 
-    // Specify Eth contract here
-    let eth_contract = EthContract::new("0x0000000000000000000000000000000000000000");
-
-    fn writeData(data: String) {
+    fn write_data(data: String, address: String) {
+        let eth_contract = EthContract::new(&address);
         eth_contract.writeData(data);
     }
 
-    fn readData(data: String) {
-        eth_contract.readData()
+    fn read_data(address: String) -> String {
+        let eth_contract = EthContract::new(&address);
+        eth_contract.readData();
+        eformat!("ABIs still in dev")
     }
 
 }
