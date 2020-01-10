@@ -1,6 +1,6 @@
-# Enigma Supply Chain
+# Enigma Collaborative Analytics
 
-Shared industry analytics for supply chain enterprises. Enigma private compute allows all participants to share in industry-wide analytics without revealing any information regarding their own operations.
+Collaborative industry analytics using Enigma private compute. Enigma allows all participants to share in industry-wide analytics without revealing any information regarding their own operations.
 
 Features:
 
@@ -8,7 +8,7 @@ Features:
 - Classification of collaborative lat/long location data with training data supplied for each function call by each party privately (Gaussian Naive Bayes).
 - Collaborative training for a classifier which may then be applied to collaborative lat/long data (Gaussian Naive Bayes).
 - Data input serialisation/deserialisation and sanitation (JSON point list input).
-- UI for data input and drawing of outputs on a Google Map (currently clustering only).
+- UI for data input and drawing of outputs on a Google Map.
 
 ## Requirements
 
@@ -41,7 +41,6 @@ This uses the HTTP Web3 provider to connect to a local Ganache network configure
 Test: `npm test`
 Build: `npm run build`
 For more details, see the [Enigma React template](https://github.com/enigmampc/discovery-template-dapp).
-
 
 ## Debugging
 
