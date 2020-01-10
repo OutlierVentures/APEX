@@ -165,7 +165,13 @@ impl LocationContract {
         let matrix = Matrix::new(num_points, 2, input);
         // Predict using trained model
         let outputs = model.predict(&matrix).unwrap();
-        eformat!("{}", outputs.sum_rows()) // Rows are cols for rusty-machine matrices
+        let frequency_array = outputs.sum_rows(); // Rows are columns for rusty-machine matrices
+        let mut outputstring = String::new();
+        for (class, frequency) in frequency_array.iter().enumerate() {
+            let this_freq = eformat!("Class {}: {}. ", class, frequency);
+            outputstring += &this_freq;
+        }
+        eformat!("{}", outputstring)
     }
 
 }
