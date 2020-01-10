@@ -11,6 +11,7 @@ import getEnigmaInit from "../utils/getEnigmaInit.js";
 // Imports - Components
 import Header from "./Header";
 import LocationContract from './LocationContract';
+import LocationClassify from './LocationClassify';
 import "../App.css";
 // Imports - Actions (Redux)
 import { initializeEnigma, initializeAccounts, deployLocationContract } from '../actions';
@@ -63,6 +64,7 @@ class App extends Component {
                     <Container>
                         <Paper>
                             <LocationContract />
+                            <LocationClassify />
                         </Paper>
                     </Container>
                 </div>
