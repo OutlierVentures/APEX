@@ -100,17 +100,17 @@ impl LocationContract {
             locations.push(elem.longitude as f64);
             classes.push(elem.class as i32);
         }
-        let num_points = locations.len();
+        let num_points = classes.len();
         let inputs = Matrix::new(num_points, 2, locations);
-        // Create classes matrix
-        let num_classes = *classes.iter().max().unwrap() as usize; // FIXME Will panic on empty list
+        // Create classes matrix - note classes start at 0
+        let num_classes = let num_classes = (classes.iter().cloned().max().unwrap() + 1) as usize; // FIXME Will panic on empty list
         let mut class_matrix: Vec<f64> = Vec::new();
         for elem in &classes {
             let mut row = Vec::new();
             row.resize(num_classes, 0f64);
-            let index = (elem - 1) as usize;
+            let index = *elem as usize;
             row[index] = 1.0;
-            class_matrix.extend(&row)
+            class_matrix.extend(&row);
         }
         let targets = Matrix::new(num_points, num_classes, class_matrix);
         // Train Gaussian Naive Bayes classifer on matrix
