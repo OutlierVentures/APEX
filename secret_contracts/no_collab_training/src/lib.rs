@@ -1,5 +1,3 @@
-// This is a version of the location contract with an ML model featuring collaborative training
-
 #![no_std]
 extern crate eng_wasm;
 extern crate eng_wasm_derive;
@@ -13,12 +11,10 @@ use serde::{Serialize, Deserialize};
 use cogset::{Euclid, Kmeans};
 use rusty_machine::learning::naive_bayes::{NaiveBayes, Gaussian};
 use rusty_machine::linalg::Matrix;
-use rusty_machine::learning::SupModel; // Used by model.train()
-use rusty_machine::prelude::BaseMatrix; // Used by outputs.sum_rows()
+use rusty_machine::learning::SupModel; // Used by model.train
 
 // Encrypted state keys
 static LOCATIONS: &str = "locations";
-static TRAININGDATA: &str = "trainingdata";
 
 // Structs
 #[derive(Serialize, Deserialize, Clone)]
@@ -30,23 +26,15 @@ pub struct Location {
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct LocationInput {
-    // Multiply by 1M - contracts only support integers
     latitude: f64,
     longitude: f64,
-}
-
-#[derive(Serialize, Deserialize, Clone)]
-pub struct LocationWithClass {
-    latitude: i32,
-    longitude: i32,
-    class: i32,
 }
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct LocationWithClassInput {
     latitude: f64,
     longitude: f64,
-    class: f64, // Float as EnigmaJS only sanitises to number type - cast to int in contract
+    class: i32,
 }
 
 
@@ -61,15 +49,9 @@ impl LocationContract {
         read_state!(LOCATIONS).unwrap_or_default()
     }
 
-    // GET TRAINING DATA FROM CONTRACT STATE
-    fn get_training_data() -> Vec<LocationWithClass> {
-        read_state!(TRAININGDATA).unwrap_or_default()
-    }
-
     // ADD LAT/LONG LOCATION DATA TO CONTRACT STATE
-    // Input latitude and longitude X1M as Enigma can't store floats
+    // Input latitude and longitude X1M (multiplied in EnigmaJS) as Enigma can't store floats
     pub fn add_location(lat_long_json: String) {
-        // Input sanitised in EngimaJS to number type - but we must cast to int
         let array: Vec<LocationInput> = serde_json::from_str(&lat_long_json).unwrap();
         let mut tostore: Vec<Location> = Vec::new();
         for elem in array.iter() {
@@ -85,28 +67,6 @@ impl LocationContract {
             locations.push(elem);
         }
         write_state!(LOCATIONS => locations);
-    }
-
-    // ADD LAT/LONG/CLASS TRAINING DATA TO CONTRACT STATE
-    // Input latitude and longitude X1M as Enigma can't store floats
-    pub fn add_training_data(lat_long_class_json: String) {
-        // Input sanitised in EngimaJS to number type - but we must cast to int
-        let array: Vec<LocationWithClassInput> = serde_json::from_str(&lat_long_class_json).unwrap();
-        let mut tostore: Vec<LocationWithClass> = Vec::new();
-        for elem in array.iter() {
-            tostore.push(
-                LocationWithClass {
-                    latitude: (elem.latitude * 1000000.0) as i32,
-                    longitude: (elem.longitude * 1000000.0) as i32,
-                    class: elem.class as i32
-                }
-            );
-        }
-        let mut training_data = Self::get_training_data();
-        for elem in tostore.iter().cloned() {
-            training_data.push(elem);
-        }
-        write_state!(TRAININGDATA => training_data);
     }
 
     // CLUSTER LOCATIONS IN CONTRACT STATE
@@ -126,9 +86,12 @@ impl LocationContract {
         eformat!("{:?}", clustvec)
     }
 
-    // TRAIN CLASSIFIER ON TRAINING DATA AND RUN ON LOCATION DATA, BOTH FROM CONTRACT STATE
-    pub fn classify() -> String {
-        let array = Self::get_training_data();
+    // TRAIN CLASSIFIER AND RUN ON LOCATION DATA IN CONTRACT STATE
+    // Could add shared training, i.e. contract state has LocationWithClass
+    // In this case all parties must agree on the number of classes
+    pub fn classify(lat_long_class_json: String) -> String {
+        // Deserialise data
+        let array: Vec<LocationWithClassInput> = serde_json::from_str(&lat_long_class_json).unwrap();
         // Write data to matrices
         let mut locations: Vec<f64> = Vec::new();
         let mut classes: Vec<i32> = Vec::new();
@@ -140,14 +103,14 @@ impl LocationContract {
         let num_points = classes.len();
         let inputs = Matrix::new(num_points, 2, locations);
         // Create classes matrix - note classes start at 0
-        let num_classes = (classes.iter().cloned().max().unwrap() + 1) as usize; // FIXME Will panic on empty list
+        let num_classes = let num_classes = (classes.iter().cloned().max().unwrap() + 1) as usize; // FIXME Will panic on empty list
         let mut class_matrix: Vec<f64> = Vec::new();
         for elem in &classes {
             let mut row = Vec::new();
             row.resize(num_classes, 0f64);
             let index = *elem as usize;
             row[index] = 1.0;
-            class_matrix.extend(row.iter().cloned());
+            class_matrix.extend(&row);
         }
         let targets = Matrix::new(num_points, num_classes, class_matrix);
         // Train Gaussian Naive Bayes classifer on matrix
@@ -165,13 +128,7 @@ impl LocationContract {
         let matrix = Matrix::new(num_points, 2, input);
         // Predict using trained model
         let outputs = model.predict(&matrix).unwrap();
-        let frequency_array = outputs.sum_rows(); // Rows are columns for rusty-machine matrices
-        let mut outputstring = String::new();
-        for (class, frequency) in frequency_array.iter().enumerate() {
-            let this_freq = eformat!("Class {}: {}. ", class, frequency);
-            outputstring += &this_freq;
-        }
-        eformat!("{}", outputstring)
+        eformat!("{}", outputs)
     }
 
 }
