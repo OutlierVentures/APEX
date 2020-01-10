@@ -150,7 +150,7 @@ class LocationClassify extends Component {
             const classesAddress = this.props.enigma.web3.eth.abi.decodeParameters([{
                 type: 'string',
                 name: 'classes',
-            }], task.decryptedOutput).classes; // NOTE make sure classes is an output property -------------------------------------------------
+            }], task.decryptedOutput).classes;
             this.props.classify(classesAddress);
         } else {
             console.log(task)
@@ -166,6 +166,10 @@ class LocationClassify extends Component {
                 </div>
             )
         }
+        // Render each class frequency on a new line
+        let classOutput = this.props.classes.split('. ').map((item, i) => {
+            return <p key={i}>{item}</p>;
+        });
         return (
             <div>
                 <Grid container spacing={3}>
@@ -205,8 +209,8 @@ class LocationClassify extends Component {
                                             color='secondary'>
                                             Submit
                                         </Button>
-                                        <br />
-                                        {this.props.classes}
+                                        <br /><br />
+                                        {classOutput}
                                     </div>
                                 </form>
                             </div> 
@@ -222,9 +226,9 @@ const mapStateToProps = (state) => {
         enigma: state.enigma,
         accounts: state.accounts,
         deployedLocationContract: state.deployedLocationContract,
-        classes: state.classes !== null ? state.classes.replace(". ", "\n") : ""
+        classes: state.classes !== null ? state.classes : ""
     }
 };
 export default connect(mapStateToProps, { classify })(reduxForm({
     form: 'addLocationWithClass',
-})(LocClassify));
+})(LocationClassify));
