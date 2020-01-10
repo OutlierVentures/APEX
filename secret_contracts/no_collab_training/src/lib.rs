@@ -103,7 +103,7 @@ impl LocationContract {
         let num_points = classes.len();
         let inputs = Matrix::new(num_points, 2, locations);
         // Create classes matrix - note classes start at 0
-        let num_classes = let num_classes = (classes.iter().cloned().max().unwrap() + 1) as usize; // FIXME Will panic on empty list
+        let num_classes = (classes.iter().cloned().max().unwrap() + 1) as usize; // FIXME Will panic on empty list
         let mut class_matrix: Vec<f64> = Vec::new();
         for elem in &classes {
             let mut row = Vec::new();
