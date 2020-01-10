@@ -13,7 +13,8 @@ use serde::{Serialize, Deserialize};
 use cogset::{Euclid, Kmeans};
 use rusty_machine::learning::naive_bayes::{NaiveBayes, Gaussian};
 use rusty_machine::linalg::Matrix;
-use rusty_machine::learning::SupModel; // Used by model.train
+use rusty_machine::learning::SupModel; // Used by model.train()
+use rusty_machine::prelude::BaseMatrix; // Used by outputs.sum_rows()
 
 // Encrypted state keys
 static LOCATIONS: &str = "locations";
@@ -164,7 +165,7 @@ impl LocationContract {
         let matrix = Matrix::new(num_points, 2, input);
         // Predict using trained model
         let outputs = model.predict(&matrix).unwrap();
-        eformat!("{}", outputs)
+        eformat!("{}", outputs.sum_rows()) // Rows are cols for rusty-machine matrices
     }
 
 }
