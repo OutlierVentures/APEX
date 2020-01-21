@@ -19,7 +19,7 @@ fi
 echo -e "${onyellow}Installing core tools...$endcolor"
 
 sudo apt-get update
-sudo apt-get install build-essential
+sudo apt-get install build-essential git curl
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 export PATH="$HOME/.cargo/bin:$PATH" # Use rustc without having to relog
 
