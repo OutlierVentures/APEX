@@ -31,6 +31,8 @@ discovery test
 
 ## Start the DApp
 
+Set your Google Maps API key [here](https://github.com/OutlierVentures/Enigma-Collaborative-Analytics/blob/master/app/src/components/LocationContract.js#L227). 
+
 ```sh
 cd app
 npm start
