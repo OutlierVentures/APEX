@@ -181,7 +181,7 @@ class LocationClassify extends Component {
                                 <div>
                                     <Field
                                         name="locationwithclassstring"
-                                        component={LocClassify.renderLocationInput}
+                                        component={LocationClassify.renderLocationInput}
                                         label="Location with class JSON array"
                                     />
                                 </div>
