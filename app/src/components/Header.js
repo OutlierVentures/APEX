@@ -29,8 +29,10 @@ class Header extends Component {
                         <Typography
                             variant="subtitle1"
                             color="inherit"
+                            style={{fontWeight: "bold", flex: 1}}
+                            align="right"
                         >
-                            Telco Industry-wide Analytics
+                            Collaborative Analytics
                         </Typography>
                     </Toolbar>
                 </AppBar>

@@ -162,7 +162,7 @@ class LocationClassify extends Component {
         if (this.props.deployedLocationContract === null) {
             return (
                 <div>
-                    <Message color="red">Secret contract not yet deployed...</Message>
+                    <Message color="blue">Clustering contract not yet deployed...</Message>
                 </div>
             )
         }
@@ -173,7 +173,7 @@ class LocationClassify extends Component {
         return (
             <div>
                 <Grid container spacing={3}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <div>
                             <Notifier />
                             <h4>Add Classifier Training Data</h4>
@@ -190,14 +190,17 @@ class LocationClassify extends Component {
                                     <Button
                                         onClick={this.props.handleSubmit(this.onAddLocationWithClass)}
                                         variant='outlined'
-                                        color='secondary'>
+                                        color='primary'>
                                         Submit
                                     </Button>
                                 </div>
                             </form>
                         </div>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item></Grid>
+                </Grid>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
                         <div>
                             <h4>Classify Telco Users</h4>
                             <div>
@@ -206,7 +209,7 @@ class LocationClassify extends Component {
                                         <Button
                                             onClick={this.props.handleSubmit(this.onClassify)}
                                             variant='outlined'
-                                            color='secondary'>
+                                            color='primary'>
                                             Submit
                                         </Button>
                                         <br /><br />
@@ -216,6 +219,7 @@ class LocationClassify extends Component {
                             </div> 
                         </div>
                     </Grid>
+                    <Grid item></Grid>
                 </Grid>
             </div>
         )

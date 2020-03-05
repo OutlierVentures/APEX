@@ -33,6 +33,7 @@ class App extends Component {
     }
 
     async componentDidMount() {
+        document.title = "Collaborative Analytics";
         // Initialize enigma-js client library (including web3)
         const enigma = await getEnigmaInit();
         // Create redux action to initialize set state variable containing enigma-js client library
@@ -53,7 +54,7 @@ class App extends Component {
             return (
                 <div className="App">
                     <Header/>
-                    <Message color="red">Enigma setup still loading...</Message>
+                    <Message color="blue">Enigma setup still loading...</Message>
                 </div>
             );
         } else {
@@ -65,6 +66,7 @@ class App extends Component {
                         <Paper>
                             <LocationContract />
                             <LocationClassify />
+                            <div>Copyright 2020 <a href="https://outlierventures.io">Outlier Ventures</a>. Written by <a href="https://github.com/theoturner">Theo Turner</a>.</div>
                         </Paper>
                     </Container>
                 </div>
