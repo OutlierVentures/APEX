@@ -176,7 +176,7 @@ class LocationContract extends Component {
         if (this.props.deployedLocationContract === null) {
             return (
                 <div>
-                    <Message color="red">Secret contract not yet deployed...</Message>
+                    <Message color="blue">Classification contract not yet deployed...</Message>
                 </div>
             )
         }
@@ -197,7 +197,7 @@ class LocationContract extends Component {
                     <Grid item xs={12}>
                         <div>
                             <Notifier />
-                            <h4>Enter Customer Location</h4>
+                            <h4>Enter Customer Location Data</h4>
                             <form>
                                 <div>
                                     <Field
@@ -218,6 +218,7 @@ class LocationContract extends Component {
                             </form>
                         </div>
                     </Grid>
+                    <Grid item></Grid>
                 </Grid>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
@@ -535,6 +536,7 @@ class LocationContract extends Component {
                             </div>
                         </div>
                     </Grid>
+                    <Grid item></Grid>
                 </Grid>
             </div>
         )
