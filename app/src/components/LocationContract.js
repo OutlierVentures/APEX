@@ -211,7 +211,7 @@ class LocationContract extends Component {
                                     <Button
                                         onClick={this.props.handleSubmit(this.onAddLocation)}
                                         variant='outlined'
-                                        color='secondary'>
+                                        color='primary'>
                                         Submit
                                     </Button>
                                 </div>
