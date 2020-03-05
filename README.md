@@ -20,7 +20,7 @@ Features:
 ./scripts/install.sh
 ```
 
-## Run
+## Deploy contracts
 
 ```sh
 discovery start
@@ -31,14 +31,14 @@ discovery test
 
 ## Start the DApp
 
-Set your Google Maps API key [here](https://github.com/OutlierVentures/Enigma-Collaborative-Analytics/blob/master/app/src/components/LocationContract.js#L227). 
+You will need a [Google Maps API key](https://developers.google.com/maps/documentation/javascript/get-api-key). Set it in `app/.env`, then start the dApp:
 
 ```sh
 cd app
 npm start
 ```
 
-This uses the HTTP Web3 provider to connect to a local Ganache network configured in truffle.js. To use MetaMask, set the Web3 provider to do so and **change the address field from a dropdown to a text field.**
+By defualt, the dApp uses the HTTP Web3 provider to connect to a local Ganache network configured in truffle.js. To use MetaMask, set the Web3 provider to do so and **change the address field from a dropdown to a text field.**
 
 Test: `npm test`
 Build: `npm run build`
