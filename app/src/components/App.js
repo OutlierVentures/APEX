@@ -53,7 +53,7 @@ class App extends Component {
             return (
                 <div className="App">
                     <Header/>
-                    <Message color="red">Enigma setup still loading...</Message>
+                    <Message color="blue">Enigma setup still loading...</Message>
                 </div>
             );
         } else {
@@ -65,6 +65,7 @@ class App extends Component {
                         <Paper>
                             <LocationContract />
                             <LocationClassify />
+                            <div>Copyright 2020 <a href="https://outlierventures.io">Outlier Ventures</a>. Written by <a href="https://github.com/theoturner">Theo Turner</a>.</div>
                         </Paper>
                     </Container>
                 </div>
