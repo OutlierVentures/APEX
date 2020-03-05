@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: #131313;
 }
 
 .App-logo {
@@ -8,7 +9,7 @@
 }
 
 .App-header {
-  background-color: #222222;
+  background-color: #181818;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -20,6 +21,15 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.MuiPaper-root {
+  background-color: #181818 !important;
+  color: #fff !important;
+}
+
+.MuiFormLabel-root, .MuiInputBase-root {
+  color: #666 !important;
 }
 
 @keyframes App-logo-spin {
