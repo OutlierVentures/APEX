@@ -2,6 +2,8 @@
 
 Collaborative industry analytics using Enigma private compute. Enigma allows all participants to share in industry-wide analytics without revealing any information regarding their own operations.
 
+Check out the [demo video](https://www.youtube.com/watch?v=qO5UgooB2do).
+
 Features:
 
 - Clustering on collaborative lat/long location data (K-Means).
