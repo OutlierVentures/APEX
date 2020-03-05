@@ -194,7 +194,7 @@ class LocationContract extends Component {
                     <Grid item xs={12}>
                         <h3>Secret Contract Address: {this.props.deployedLocationContract}</h3>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                         <div>
                             <Notifier />
                             <h4>Enter Customer Location</h4>
@@ -218,11 +218,13 @@ class LocationContract extends Component {
                             </form>
                         </div>
                     </Grid>
-                    <Grid item xs={6}>
+                </Grid>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
                         <div>
                             <h4>Cluster Telco Users</h4>
                             <div>
-                                <div style={{ height: '100vh', width: '100%' }}>
+                                <div style={{ height: '70em', width: '100%' }}>
                                     <GoogleMapReact
                                     bootstrapURLKeys={{ key: "AIzaSyCd2xxw5-95c7a_a2JNO4O47JxhJLGQiOg" }}
                                     defaultCenter={{ lat: 51.507221, lng: -0.127600}}
