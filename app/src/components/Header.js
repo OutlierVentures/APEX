@@ -32,7 +32,7 @@ class Header extends Component {
                             style={{fontWeight: "bold", flex: 1}}
                             align="right"
                         >
-                            Collaborative Analytics
+                            APEX
                         </Typography>
                     </Toolbar>
                 </AppBar>

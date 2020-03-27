@@ -33,7 +33,7 @@ class App extends Component {
     }
 
     async componentDidMount() {
-        document.title = "Collaborative Analytics";
+        document.title = "APEX";
         // Initialize enigma-js client library (including web3)
         const enigma = await getEnigmaInit();
         // Create redux action to initialize set state variable containing enigma-js client library
