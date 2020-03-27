@@ -1,8 +1,8 @@
-# Enigma Collaborative Analytics
+![APEX](./docs/ca_logo.png)
 
 Collaborative industry analytics using Enigma private compute. Enigma allows all participants to share in industry-wide analytics without revealing any information regarding their own operations.
 
-Check out the [demo video](https://www.youtube.com/watch?v=qO5UgooB2do).
+Check out the [demo video](https://www.youtube.com/watch?v=mrdCvnSCE7Q).
 
 Features:
 
