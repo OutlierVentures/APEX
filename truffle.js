@@ -1,6 +1,7 @@
 // See <http://truffleframework.com/docs/advanced/configuration>
 // to customize your Truffle configuration!
 module.exports = {
+    contracts_directory: './smart_contracts',
     networks: {
         development: {
             host: 'localhost',

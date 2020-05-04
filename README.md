@@ -22,10 +22,20 @@ Features:
 ./scripts/install.sh
 ```
 
+## Start a local dev chain
+
+```sh
+docker-compose pull
+discovery start
+```
+
+## Environment Config
+
+Set the `BUILD_CONTRACTS_PATH` in `.env` to `${PWD}/build/enigma_contracts`
+
 ## Deploy contracts
 
 ```sh
-discovery start
 discovery compile
 disvovery migrate
 discovery test

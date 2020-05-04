@@ -6,3 +6,5 @@ build/smart_contacts/*
 build/secret_contracts/*
 secret_contracts/**/target
 .DS_store
+.env
+test/*.txt
