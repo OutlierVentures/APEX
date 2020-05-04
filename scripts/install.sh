@@ -23,11 +23,18 @@ sudo apt-get install build-essential git curl
 curl https://sh.rustup.rs -sSf | sh -s -- -y
 export PATH="$HOME/.cargo/bin:$PATH" # Use rustc without having to relog
 
+RUST_NIGHTLY=nightly-2019-08-01
+
+echo -e "${onyellow}Installing required Rust toolchain for Enigma...$endcolor"
+
+rustup toolchain install $RUST_NIGHTLY
+rustup target add wasm32-unknown-unknown --toolchain $RUST_NIGHTLY
+
 echo -e "${onyellow}Installing Enigma...$endcolor"
 
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 sudo apt-get install -y nodejs
-sudo npm install -g @enigmampc/discovery-cli --unsafe-perm=true
+sudo npm install -g @enigmampc/discovery-cli @truffle/debug-utils --unsafe-perm=true
 npm install
 cd app
 npm install
